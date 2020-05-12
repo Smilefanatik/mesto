@@ -2,9 +2,15 @@
   border: none;
   border-top: 1px solid #545454;
   opacity: 0.7;
-  margin: 0 200px;
-
+  margin: 0 159px;
 }
+
+@media screen and (max-width: 1110px) {
+  .header__line {
+    margin: 0 100px;
+  }
+}
+
 
 @media screen and (max-width: 800px) {
   .header__line {

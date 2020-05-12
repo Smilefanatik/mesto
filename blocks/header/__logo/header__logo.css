@@ -2,16 +2,22 @@
   background-image: url(../../../images/logo.svg);
   width: 145px;
   height: 34px;
-  margin-left: 200px;
+  margin-left: 159px;
   margin-bottom: 40px;
   object-fit: cover;
   background-repeat: no-repeat;
 }
 
+@media screen and (max-width: 1110px) {
+  .header__logo {
+    margin-left: 100px;
+  }
+}
+
 @media screen and (max-width: 800px) {
   .header__logo {
     background-size: 104px 25px;
-    margin-left: 100px;
+    margin-left: 50px;
     margin-bottom: 32px;
     height: 25px;
 

@@ -5,6 +5,12 @@
   margin-left: 159px;
 }
 
+@media screen and (max-width: 1110px) {
+  .profile__avatar {
+    margin-left: 100px;
+  }
+}
+
 @media screen and (max-width: 950px) {
   .profile__avatar {
     margin-left: 0;
