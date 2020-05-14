@@ -21,10 +21,10 @@
         <img class="profile__avatar" src="./images/photo_avatar.jpeg" alt="аватар">
         <div class="profile__info">
           <div class="profile__name-group">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <h1 class="profile__name">Дикий Хиппи</h1>
             <button class="profile__edit-button"></button>
           </div>
-          <p class="profile__job">Исследователь океана</p>
+          <p class="profile__job">Исследователь притонов</p>
         </div>
         <button class="profile__add-button"></button>
       </section>
@@ -40,7 +40,7 @@
         <div class="element">
           <img class="element__photo" src="./images/photo_bubbles.jpg" alt="Пузыри">
           <div class="element__group">
-            <h2 class="element__title">Гора Эльбрус</h2>
+            <h2 class="element__title">Гора Эльбрус Гора Эльбрус</h2>
             <button class="element__like"></button>
           </div>
         </div>
@@ -76,13 +76,13 @@
     </main>
 
     <div class="popup">
-      <div class="popup__container">
+      <form class="popup__container">
         <button class="popup__close-icon"></button>
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" class="popup__input">
-          <input type="text" class="popup__input">
-          <button class="popup__save-button">Сохранить</button>
-      </div>
+          <input type="text" value="Дикий Хиппи" class="popup__input popup__input_element_name">
+          <input type="text" value="Исследователь притонов" class="popup__input popup__input_element_job">
+          <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
     </div>
 
     <footer class="footer">
@@ -90,6 +90,7 @@
     </footer>
   </div>
   <script src="./blocks/popup/popup.js"></script>
+  <script src="./blocks/popup/__container/popup__container.js"></script>
 </body>
 
 </html>
