@@ -1,5 +1,5 @@
 // Находим форму в DOM
-let form = document.querySelector('.popup__container'); // Воспользуйтесь методом querySelector()
+const form = document.querySelector('.popup__container'); // Воспользуйтесь методом querySelector()
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
