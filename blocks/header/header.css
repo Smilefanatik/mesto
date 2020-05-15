@@ -1,5 +1,4 @@
 @import url(./__logo/header__logo.css);
-@import url(./__line/header__line.css);
 
 .header {
   max-width: 1200px;
@@ -8,8 +7,23 @@
   margin: 0 auto;
 }
 
+.header::after {
+  content: '';
+  display: block;
+  margin: 0 auto;
+  height: 1px;
+  background-color: #545454;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
 @media screen and (max-width: 800px) {
   .header {
     padding-top: 28px;
+  }
+
+  .header::after {
+    width: 100%;
+    margin: 0;
   }
 }
