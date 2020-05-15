@@ -7,7 +7,7 @@
   border: none;
   cursor: pointer;
   background-color: black;
-  background-image: url(../../../images/Add_button.svg);
+  background-image: url(../../../images/add_button.svg);
   background-position: center;
   background-repeat: no-repeat;
   transition: ease 0.8s opacity;
@@ -26,7 +26,7 @@
 
 @media screen and (max-width: 950px) {
   .profile__add-button {
-    background-image: url(../../../images/Add-button_long.svg);
+    background-image: url(../../../images/add-button_long.svg);
     width: 282px;
     height: 50px;
     margin: 36px 0 0;
