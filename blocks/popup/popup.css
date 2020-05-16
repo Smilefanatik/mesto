@@ -8,7 +8,7 @@
 @import url(./__input/_element/popup__input_element_job.css);
 
 .popup {
-  background-color: rgba(42, 44, 47, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
   width: 100%;
