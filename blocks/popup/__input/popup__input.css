@@ -1,19 +1,15 @@
 .popup__input {
+  outline: none;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
   width: 358px;
   height: 35px;
   margin: 25px 0 0;
-  border-radius: 2px;
   font-style: normal;
   font-weight: normal;
   font-size: 0.875rem;
   line-height: 1.06;
-}
-
-.popup__input:focus {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  outline: none;
 }
 
 @media screen and (max-width: 450px) {
