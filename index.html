@@ -35,13 +35,23 @@
       </section>
     </main>
 
-    <div class="popup">
-      <form class="popup__container">
-        <button type="reset" class="popup__close-icon"></button>
+    <div class="popup popup_type_edit-profile">
+      <form class="popup__container popup__container_type_edit-profile">
+        <button type="reset" class="popup__close-icon popup__close-icon_edit-profile"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <input type="text" value="Дикий Хиппи" class="popup__input popup__input_element_name">
         <input type="text" value="Исследователь притонов" class="popup__input popup__input_element_job">
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button popup__save-button_edit-profile">Сохранить</button>
+      </form>
+    </div>
+
+    <div class="popup popup_type_add-form">
+      <form class="popup__container popup__container_type_add-form">
+        <button type="reset" class="popup__close-icon popup__close-icon_add-form"></button>
+        <h2 class="popup__title">Новое Место</h2>
+        <input type="text" class="popup__input popup__input__element_place" placeholder="Название">
+        <input type="url" class="popup__input popup__input_element_link" placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__save-button popup__save-button_add-form">Создать</button>
       </form>
     </div>
 
