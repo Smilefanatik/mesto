@@ -1,18 +1,21 @@
 const editButton = document.querySelector('.profile__edit-button');
 const closeIcons = document.querySelectorAll('.popup__close-icon');
 const addButton = document.querySelector('.profile__add-button');
-
+//Подключаем попапы и формы
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const popupAdd = document.querySelector('.popup_type_add-form');
 const formEdit = document.querySelector('.popup__container_type_edit-profile');
 const formAdd = document.querySelector('.popup__container_type_add-form');
-
+//Подключаем поля ввода
 const nameInput = document.querySelector('.popup__input_element_name');
 const jobInput = document.querySelector('.popup__input_element_job');
-    // Элементы, куда должны быть вставлены значения value полей.
+
+// Элементы профиля, куда должны быть вставлены значения value полей.
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-
+//Подключаем template и список элементов для вывода первых 6 карточек мест
+const elementTemplate = document.querySelector('.element__template').content;
+const elementsList = document.querySelector('.elements__list');
 
 //ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
 //Функция, которая открывает или закрывает Popup.
@@ -42,11 +45,38 @@ closeIcons.forEach(function (icon) {
 });
 
 
-//ФУНКЦИОНАЛ СОХРАНЕНИЯ ФОРМЫ
+
+//ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
+const placeInput = document.querySelector('.popup__input__element_place');
+const linkInput = document.querySelector('.popup__input_element_link');
 // Обработчик «отправки» формы
-function formSubmitHandler (evt) {
+function formAddSubmitHandler (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                        // Так мы определим свою логику отправки.
+
+//1 взять из формы название места и ссылку на картинку
+const placeValue = placeInput.value;
+const linkValue = linkInput.value;
+//2 создать новую карточку
+const element = elementTemplate.cloneNode(true);
+//3 вставить в нее значения из формы
+element.querySelector('.element__title').textContent = placeValue;
+element.querySelector('.element__photo').src = linkValue;
+//4 вставить карточку в начало списка
+elementsList.prepend(element);
+//5 автоматически закрыть попап
+popup.classList.remove('popup_opened');
+}
+
+// Прикрепить обработчик к форме:
+formAdd.addEventListener('submit', formAddSubmitHandler);
+
+
+//ФУНКЦИОНАЛ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
+// Обработчик «отправки» формы
+function formEditSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                                // Так мы определим свою логику отправки.
+                          // Так мы определим свою логику отправки.
 
     // Получить значение полей из свойства value
     const nameValue = nameInput.value;
@@ -61,7 +91,7 @@ function formSubmitHandler (evt) {
 }
 
 // Прикрепить обработчик к форме:
-formEdit.addEventListener('submit', formSubmitHandler);
+formEdit.addEventListener('submit', formEditSubmitHandler);
 
 
 //НАПОЛНЕНИЕ ELEMENTS 6 КАРТОЧКАМИ
@@ -94,13 +124,9 @@ const initialCards = [
   }
 ];
 
-//Подключаем template и список элементов
-const elementTemplate = document.querySelector('.element__template').content;
-const elementsList = document.querySelector('.elements__list');
-
 //Наполняем element содержимым: методом forEach добавляем заголовок и изображение в карточку
 initialCards.forEach(function (item) {
-  //1 Клонируем template
+  //1 клонируем template
   const element = elementTemplate.cloneNode(true);
   //2 вставляем содержимое name в element
   element.querySelector('.element__title').textContent = item.name;
