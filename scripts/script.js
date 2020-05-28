@@ -4,6 +4,7 @@ const addButton = document.querySelector('.profile__add-button');
 //Подключаем попапы и формы
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const popupAdd = document.querySelector('.popup_type_add-form');
+const popupImage = document.querySelector('.popup_type_image');
 const formEdit = document.querySelector('.popup__container_type_edit-profile');
 const formAdd = document.querySelector('.popup__container_type_add-form');
 //Подключаем поля ввода
@@ -17,6 +18,11 @@ const profileJob = document.querySelector('.profile__job');
 //Подключаем template и список элементов для вывода первых 6 карточек мест
 const elementTemplate = document.querySelector('.element__template').content;
 const elementsList = document.querySelector('.elements__list');
+
+
+//ФУНКЦИОНАЛ ОТКРЫТИЯ КАРТИНКИ
+//1 навесить на картинку слушателя по клику
+//2 обработчик открывает попап
 
 
 //ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
@@ -77,7 +83,6 @@ function formAddSubmitHandler (evt) {
   //7 автоматически закрыть попап
     openClose(popupAdd);
   }
-
 // Прикрепить обработчик к форме:
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
@@ -99,7 +104,6 @@ function formEditSubmitHandler (evt) {
     //Автоматически закрыть попап
     openClose(popupEdit);
 }
-
 // Прикрепить обработчик к форме:
 formEdit.addEventListener('submit', formEditSubmitHandler);
 

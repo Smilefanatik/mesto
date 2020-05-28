@@ -1,6 +1,7 @@
 @import url(./__container/popup__container.css);
 @import url(./__container/popup__container/_type/popup__container_type_add-form.css);
 @import url(./__container/popup__container/_type/popup__container_type_edit-profile.css);
+@import url(./__container/popup__container/_type/popup__container_type_image.css);
 @import url(./__close-icon/popup__close-icon.css);
 @import url(./__title/popup__title.css);
 @import url(./__input/popup__input.css);
@@ -9,6 +10,8 @@
 @import url(./__input/_element/popup__input_element_place.css);
 @import url(./__input/_element/popup__input_element_link.css);
 @import url(./__save-button/popup__save-button.css);
+@import url(./__image/popup__image.css);
+@import url(./__text/popup__text.css);
 
 .popup {
   background-color: rgba(0, 0, 0, 0.5);
