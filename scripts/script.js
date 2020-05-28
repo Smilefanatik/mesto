@@ -54,18 +54,18 @@ function formAddSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                         // Так мы определим свою логику отправки.
 
-//1 взять из формы название места и ссылку на картинку
-const placeValue = placeInput.value;
-const linkValue = linkInput.value;
-//2 создать новую карточку
-const element = elementTemplate.cloneNode(true);
-//3 вставить в нее значения из формы
-element.querySelector('.element__title').textContent = placeValue;
-element.querySelector('.element__photo').src = linkValue;
-//4 вставить карточку в начало списка
-elementsList.prepend(element);
-//5 автоматически закрыть попап
-popup.classList.remove('popup_opened');
+  //1 взять из формы название места и ссылку на картинку
+  const placeValue = placeInput.value;
+  const linkValue = linkInput.value;
+  //2 создать новую карточку
+  const element = elementTemplate.cloneNode(true);
+  //3 вставить в нее значения из формы
+  element.querySelector('.element__title').textContent = placeValue;
+  element.querySelector('.element__photo').src = linkValue;
+  //4 вставить карточку в начало списка
+  elementsList.prepend(element);
+  //5 автоматически закрыть попап
+  openClose(popupAdd);
 }
 
 // Прикрепить обработчик к форме:
@@ -87,7 +87,7 @@ function formEditSubmitHandler (evt) {
     profileJob.textContent = jobValue;
 
     //Автоматически закрыть попап
-    popup.classList.remove('popup_opened');
+    openClose(popupEdit);
 }
 
 // Прикрепить обработчик к форме:
