@@ -18,95 +18,34 @@ const profileJob = document.querySelector('.profile__job');
 //Подключаем template и список элементов для вывода первых 6 карточек мест
 const elementTemplate = document.querySelector('.element__template').content;
 const elementsList = document.querySelector('.elements__list');
+//Подключаем изображение места
+const elementImage = document.querySelector('.element__photo');
 
 
-//ФУНКЦИОНАЛ ОТКРЫТИЯ КАРТИНКИ
-//1 навесить на картинку слушателя по клику
-//2 обработчик открывает попап
-
-
-//ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
-//Функция, которая открывает или закрывает Popup.
-function openClose(popup) {
-  popup.classList.toggle('popup_opened');
-}
-
-//Cлушатель на кнопку редактирования.
-editButton.addEventListener('click', function () {
-  openClose(popupEdit);
-//Подтянуть из profileName и profileJob пользователя данные поля формы
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-});
-
-//Cлушатель на кнопку редактирования.
-addButton.addEventListener('click', function () {
-  openClose(popupAdd);
-});
-
-//Cлушатель на крестик.
-closeIcons.forEach(function (icon) {
-  icon.addEventListener('click', function (evt) {
-    const whichPopup = evt.target.closest('div');
-    openClose(whichPopup);
-  });
-});
-
-
-
-//ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
-// Обработчик «отправки» формы
-function formAddSubmitHandler (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                        // Так мы определим свою логику отправки.
-
-  //1 взять из формы название места и ссылку на картинку
-  const placeValue = placeInput.value;
-  const linkValue = linkInput.value;
-  //2 создать новую карточку
-  const element = elementTemplate.cloneNode(true);
-  //3 вставить в нее значения из формы
-  element.querySelector('.element__title').textContent = placeValue;
-  element.querySelector('.element__photo').src = linkValue;
+//ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
+function createCard(name, link) {
+  //1 клонировать template
+  const card = elementTemplate.cloneNode(true);
+  //2 вставить содержимое name в element
+  card.querySelector('.element__title').textContent = name;
+  //3 вставить содержимое link в атрибут src element
+  card.querySelector('.element__photo').src = link;
   //4 добавить слушателя на сердечко
-  element.querySelector('.element__like').addEventListener('click', function (evt) {
+  card.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
   });
   //5 добавить слушателя на корзину
-  const bin = element.querySelector('.element__bin');
+  const bin = card.querySelector('.element__bin');
   bin.addEventListener('click', function () {
     const listItem = bin.closest('.element');
     listItem.remove();
   });
-  //6 вставить карточку в начало списка
-  elementsList.prepend(element);
-  //7 автоматически закрыть попап
-    openClose(popupAdd);
-  }
-// Прикрепить обработчик к форме:
-formAdd.addEventListener('submit', formAddSubmitHandler);
+  //6 добавить слушателя на картинку
 
-
-//ФУНКЦИОНАЛ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
-// Обработчик «отправки» формы
-function formEditSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                          // Так мы определим свою логику отправки.
-
-    // Получить значение полей из свойства value
-    const nameValue = nameInput.value;
-    const jobValue = jobInput.value;
-
-    // Вставить новые значения с помощью textContent
-    profileName.textContent = nameValue;
-    profileJob.textContent = jobValue;
-
-    //Автоматически закрыть попап
-    openClose(popupEdit);
+  //7 вернуть собранную карточку
+  return card;
 }
-// Прикрепить обработчик к форме:
-formEdit.addEventListener('submit', formEditSubmitHandler);
-
+//___________________________________________________________________________
 
 //НАПОЛНЕНИЕ ELEMENTS 6 КАРТОЧКАМИ
 //При загрузке на странице должно быть 6 карточек, которые добавит JavaScript на основе готового массива.
@@ -140,22 +79,80 @@ const initialCards = [
 
 //Наполнить element содержимым: методом forEach добавить заголовок и изображение в карточку.
 initialCards.forEach(function (item) {
-  //1 клонировать template
-  const element = elementTemplate.cloneNode(true);
-  //2 вставить содержимое name в element
-  element.querySelector('.element__title').textContent = item.name;
-  //3 вставить содержимое link в атрибут src element
-  element.querySelector('.element__photo').src = item.link;
-  //4 добавить слушателя на сердечко
-  element.querySelector('.element__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
-  });
-  //5 добавить слушателя на корзину
-  const bin = element.querySelector('.element__bin');
-  bin.addEventListener('click', function () {
-    const listItem = bin.closest('.element');
-    listItem.remove();
-  });
-  //6 отобразить на странице
-  elementsList.append(element);
+  //1 создать карточку
+  const newCard = createCard(item.name, item.link);
+  //2 добавить новую карточку в список элементов
+  elementsList.append(newCard);
 })
+//___________________________________________________________________________
+
+//ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
+//Функция, которая открывает или закрывает Popup.
+function openClose(popup) {
+  popup.classList.toggle('popup_opened');
+}
+
+//Cлушатель на кнопку редактирования.
+editButton.addEventListener('click', function () {
+  openClose(popupEdit);
+//Подтянуть из profileName и profileJob пользователя данные поля формы
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileJob.textContent;
+});
+
+//Cлушатель на кнопку редактирования.
+addButton.addEventListener('click', function () {
+  openClose(popupAdd);
+});
+
+//Cлушатель на крестик.
+closeIcons.forEach(function (icon) {
+  icon.addEventListener('click', function (evt) {
+    const whichPopup = evt.target.closest('div');
+    openClose(whichPopup);
+  });
+});
+//___________________________________________________________________________
+
+//ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
+// Обработчик «отправки» формы
+function formAddSubmitHandler (evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                        // Так мы определим свою логику отправки.
+
+  //1 взять из формы название места и ссылку на картинку
+  const placeValue = placeInput.value;
+  const linkValue = linkInput.value;
+  //2 создать новую карточку
+  const newCard = createCard(placeValue, linkValue);
+  //6 вставить карточку в начало списка
+  elementsList.prepend(newCard);
+  //7 автоматически закрыть попап
+    openClose(popupAdd);
+  }
+// Прикрепить обработчик к форме:
+formAdd.addEventListener('submit', formAddSubmitHandler);
+//___________________________________________________________________________
+
+//ФУНКЦИОНАЛ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
+// Обработчик «отправки» формы
+function formEditSubmitHandler (evt) {
+    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+                          // Так мы определим свою логику отправки.
+
+    // Получить значение полей из свойства value
+    const nameValue = nameInput.value;
+    const jobValue = jobInput.value;
+
+    // Вставить новые значения с помощью textContent
+    profileName.textContent = nameValue;
+    profileJob.textContent = jobValue;
+
+    //Автоматически закрыть попап
+    openClose(popupEdit);
+}
+// Прикрепить обработчик к форме:
+formEdit.addEventListener('submit', formEditSubmitHandler);
+
+
+
