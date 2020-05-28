@@ -66,9 +66,15 @@ element.querySelector('.element__photo').src = linkValue;
 element.querySelector('.element__like').addEventListener('click', function (evt) {
   evt.target.classList.toggle('element__like_active');
 });
-//5 вставить карточку в начало списка
+//5 добавить слушателя на корзину
+const bin = element.querySelector('.element__bin');
+bin.addEventListener('click', function () {
+  const listItem = bin.closest('.element');
+  listItem.remove();
+});
+//6 вставить карточку в начало списка
 elementsList.prepend(element);
-//6 автоматически закрыть попап
+//7 автоматически закрыть попап
 popup.classList.remove('popup_opened');
 }
 
@@ -140,6 +146,12 @@ initialCards.forEach(function (item) {
   element.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
   });
-  //5 отобразить на странице
+  //5 добавить слушателя на корзину
+  const bin = element.querySelector('.element__bin');
+  bin.addEventListener('click', function () {
+    const listItem = bin.closest('.element');
+    listItem.remove();
+  });
+  //6 отобразить на странице
   elementsList.append(element);
 })
