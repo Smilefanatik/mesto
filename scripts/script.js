@@ -9,13 +9,15 @@ const formAdd = document.querySelector('.popup__container_type_add-form');
 //Подключаем поля ввода
 const nameInput = document.querySelector('.popup__input_element_name');
 const jobInput = document.querySelector('.popup__input_element_job');
-
+const placeInput = document.querySelector('.popup__input__element_place');
+const linkInput = document.querySelector('.popup__input_element_link');
 // Элементы профиля, куда должны быть вставлены значения value полей.
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 //Подключаем template и список элементов для вывода первых 6 карточек мест
 const elementTemplate = document.querySelector('.element__template').content;
 const elementsList = document.querySelector('.elements__list');
+
 
 //ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
 //Функция, которая открывает или закрывает Popup.
@@ -47,8 +49,6 @@ closeIcons.forEach(function (icon) {
 
 
 //ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
-const placeInput = document.querySelector('.popup__input__element_place');
-const linkInput = document.querySelector('.popup__input_element_link');
 // Обработчик «отправки» формы
 function formAddSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -62,9 +62,13 @@ const element = elementTemplate.cloneNode(true);
 //3 вставить в нее значения из формы
 element.querySelector('.element__title').textContent = placeValue;
 element.querySelector('.element__photo').src = linkValue;
-//4 вставить карточку в начало списка
+//4 добавить слушателя на сердечко
+element.querySelector('.element__like').addEventListener('click', function (evt) {
+  evt.target.classList.toggle('element__like_active');
+});
+//5 вставить карточку в начало списка
 elementsList.prepend(element);
-//5 автоматически закрыть попап
+//6 автоматически закрыть попап
 popup.classList.remove('popup_opened');
 }
 
@@ -124,14 +128,18 @@ const initialCards = [
   }
 ];
 
-//Наполняем element содержимым: методом forEach добавляем заголовок и изображение в карточку
+//Наполнить element содержимым: методом forEach добавить заголовок и изображение в карточку.
 initialCards.forEach(function (item) {
-  //1 клонируем template
+  //1 клонировать template
   const element = elementTemplate.cloneNode(true);
-  //2 вставляем содержимое name в element
+  //2 вставить содержимое name в element
   element.querySelector('.element__title').textContent = item.name;
-  //3 вставляем содержимое link в атрибут src element
+  //3 вставить содержимое link в атрибут src element
   element.querySelector('.element__photo').src = item.link;
-  //4 отображаем на странице
+  //4 добавить слушателя на сердечко
+  element.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+  });
+  //5 отобразить на странице
   elementsList.append(element);
 })
