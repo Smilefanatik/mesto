@@ -54,29 +54,29 @@ function formAddSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                         // Так мы определим свою логику отправки.
 
-//1 взять из формы название места и ссылку на картинку
-const placeValue = placeInput.value;
-const linkValue = linkInput.value;
-//2 создать новую карточку
-const element = elementTemplate.cloneNode(true);
-//3 вставить в нее значения из формы
-element.querySelector('.element__title').textContent = placeValue;
-element.querySelector('.element__photo').src = linkValue;
-//4 добавить слушателя на сердечко
-element.querySelector('.element__like').addEventListener('click', function (evt) {
-  evt.target.classList.toggle('element__like_active');
-});
-//5 добавить слушателя на корзину
-const bin = element.querySelector('.element__bin');
-bin.addEventListener('click', function () {
-  const listItem = bin.closest('.element');
-  listItem.remove();
-});
-//6 вставить карточку в начало списка
-elementsList.prepend(element);
-//7 автоматически закрыть попап
-popup.classList.remove('popup_opened');
-}
+  //1 взять из формы название места и ссылку на картинку
+  const placeValue = placeInput.value;
+  const linkValue = linkInput.value;
+  //2 создать новую карточку
+  const element = elementTemplate.cloneNode(true);
+  //3 вставить в нее значения из формы
+  element.querySelector('.element__title').textContent = placeValue;
+  element.querySelector('.element__photo').src = linkValue;
+  //4 добавить слушателя на сердечко
+  element.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+  });
+  //5 добавить слушателя на корзину
+  const bin = element.querySelector('.element__bin');
+  bin.addEventListener('click', function () {
+    const listItem = bin.closest('.element');
+    listItem.remove();
+  });
+  //6 вставить карточку в начало списка
+  elementsList.prepend(element);
+  //7 автоматически закрыть попап
+    openClose(popupAdd);
+  }
 
 // Прикрепить обработчик к форме:
 formAdd.addEventListener('submit', formAddSubmitHandler);
@@ -97,7 +97,7 @@ function formEditSubmitHandler (evt) {
     profileJob.textContent = jobValue;
 
     //Автоматически закрыть попап
-    popup.classList.remove('popup_opened');
+    openClose(popupEdit);
 }
 
 // Прикрепить обработчик к форме:
