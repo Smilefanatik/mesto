@@ -35,6 +35,7 @@ function createCard(name, link) {
   //3 вставить содержимое link в атрибут src element
   const image = card.querySelector('.element__photo');
   image.src = link;
+  image.alt = name;
   //4 добавить слушателя на сердечко
   const like = card.querySelector('.element__like');
   like.addEventListener('click', function () {
