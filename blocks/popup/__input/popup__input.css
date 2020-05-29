@@ -12,8 +12,8 @@
   line-height: 1.06;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 500px) {
   .popup__input {
-    width: 245px;
+    width: 200px;
  }
 }

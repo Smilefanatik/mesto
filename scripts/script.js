@@ -1,3 +1,4 @@
+//Подключаем иконки и кнопки
 const editButton = document.querySelector('.profile__edit-button');
 const closeIcons = document.querySelectorAll('.popup__close-icon');
 const addButton = document.querySelector('.profile__add-button');
@@ -20,19 +21,24 @@ const elementTemplate = document.querySelector('.element__template').content;
 const elementsList = document.querySelector('.elements__list');
 //Подключаем изображение места
 const elementImage = document.querySelector('.element__photo');
-
+//Подключаем элементы попапа с картинкой
+const popupElementImage = document.querySelector('.popup__image');
+const popupElementText = document.querySelector('.popup__text');
 
 //ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
 function createCard(name, link) {
   //1 клонировать template
   const card = elementTemplate.cloneNode(true);
   //2 вставить содержимое name в element
-  card.querySelector('.element__title').textContent = name;
+  const title = card.querySelector('.element__title');
+  title.textContent = name;
   //3 вставить содержимое link в атрибут src element
-  card.querySelector('.element__photo').src = link;
+  const image = card.querySelector('.element__photo');
+  image.src = link;
   //4 добавить слушателя на сердечко
-  card.querySelector('.element__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
+  const like = card.querySelector('.element__like');
+  like.addEventListener('click', function () {
+    like.classList.toggle('element__like_active');
   });
   //5 добавить слушателя на корзину
   const bin = card.querySelector('.element__bin');
@@ -40,8 +46,15 @@ function createCard(name, link) {
     const listItem = bin.closest('.element');
     listItem.remove();
   });
-  //6 добавить слушателя на картинку
-
+  //6 добавить слушателя на картинку с вызовом функции
+  image.addEventListener('click', function (evt) {
+    //1 подтянуть изображение из карточки в попап
+    popupElementImage.src = evt.target.src;
+    //2 подтянуть заголовок карточки в попап
+    popupElementText.textContent = title.textContent;
+    //3 открыть попап
+    openClose(popupImage);
+  });
   //7 вернуть собранную карточку
   return card;
 }
@@ -108,7 +121,7 @@ addButton.addEventListener('click', function () {
 //Cлушатель на крестик.
 closeIcons.forEach(function (icon) {
   icon.addEventListener('click', function (evt) {
-    const whichPopup = evt.target.closest('div');
+    const whichPopup = evt.target.closest('.popup');
     openClose(whichPopup);
   });
 });
