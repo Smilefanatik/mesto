@@ -30,6 +30,30 @@ function togglePopup(popup) {
   popup.classList.toggle('popup_opened');
 }
 
+function addCardEvents(card) {
+  //1 добавить слушателя на сердечко
+  const like = card.querySelector('.element__like');
+  like.addEventListener('click', function () {
+    like.classList.toggle('element__like_active');
+  });
+  //2 добавить слушателя на корзину
+  const bin = card.querySelector('.element__bin');
+  bin.addEventListener('click', function () {
+    const listItem = bin.closest('.element');
+    listItem.remove();
+  });
+  //3 добавить слушателя на картинку с вызовом функции
+  const image = card.querySelector('.element__photo');
+  image.addEventListener('click', function (evt) {
+    //1 подтянуть изображение из карточки в попап
+    popupElementImage.src = evt.target.src;
+    //2 подтянуть заголовок карточки в попап
+    popupElementText.textContent = evt.target.alt;
+    //3 открыть попап
+    togglePopup(popupImage);
+});
+};
+
 //ФУНКЦИОНАЛ СОЗДАНИЯ КАРТОЧКИ
 function createCard(name, link) {
   //1 клонировать template
@@ -41,29 +65,20 @@ function createCard(name, link) {
   const image = card.querySelector('.element__photo');
   image.src = link;
   image.alt = name;
-  //4 добавить слушателя на сердечко
-  const like = card.querySelector('.element__like');
-  like.addEventListener('click', function () {
-    like.classList.toggle('element__like_active');
-  });
-  //5 добавить слушателя на корзину
-  const bin = card.querySelector('.element__bin');
-  bin.addEventListener('click', function () {
-    const listItem = bin.closest('.element');
-    listItem.remove();
-  });
-  //6 добавить слушателя на картинку с вызовом функции
-  image.addEventListener('click', function (evt) {
-    //1 подтянуть изображение из карточки в попап
-    popupElementImage.src = evt.target.src;
-    //2 подтянуть заголовок карточки в попап
-    popupElementText.textContent = evt.target.alt;
-    //3 открыть попап
-    togglePopup(popupImage);
-  });
-  //7 вернуть собранную карточку
+  //4 добавить слушателей на иконки и картинку
+  addCardEvents(card)
+  //5 вернуть собранную карточку
   return card;
 }
+
+//ФУНКЦИОНАЛ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
+function addArrayItems(item) {
+  //1 создать карточку
+  const newCard = createCard(item.name, item.link);
+  //2 добавить новую карточку в список элементов
+  elementsList.append(newCard);
+}
+
 
 //ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
 // Обработчик «отправки» формы
@@ -80,9 +95,10 @@ function formAddSubmitHandler (evt) {
   elementsList.prepend(newCard);
   //4 автоматически закрыть попап
   togglePopup(popupAdd);
-  }
   //5 обнулить форму
-  formAdd.reset();
+  placeInput.value = "";
+  linkInput.value = "";
+};
 // Прикрепить обработчик к форме:
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
@@ -132,10 +148,8 @@ closeIcons.forEach(function (icon) {
 });
 //___________________________________________________________________________
 
-
 //НАПОЛНЕНИЕ ELEMENTS 6 КАРТОЧКАМИ
 //При загрузке на странице должно быть 6 карточек, которые добавит JavaScript на основе готового массива.
-//Готовый массив:
 const initialCards = [
   {
       name: 'Лес',
@@ -163,18 +177,5 @@ const initialCards = [
   }
 ];
 
-
-function renderListItem(item) {
-  //1 создать карточку
-  const newCard = createCard(item.name, item.link);
-  //2 добавить новую карточку в список элементов
-  elementsList.append(newCard);
-}
-
 //Наполнить element содержимым: методом forEach добавить заголовок и изображение в карточку.
-initialCards.forEach(renderListItem);
-//___________________________________________________________________________
-
-
-
-
+initialCards.forEach(addArrayItems)
