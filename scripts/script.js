@@ -17,8 +17,8 @@ const linkInput = document.querySelector('.popup__input_element_link');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 //Подключаем template и список элементов для вывода первых 6 карточек мест
-const elementTemplate = document.querySelector('.element__template').content;
-const elementsList = document.querySelector('.elements__list');
+const cardTemplate = document.querySelector('.card__template').content;
+const cardsList = document.querySelector('.cards__list');
 //Подключаем элементы попапа с картинкой
 const popupElementImage = document.querySelector('.popup__image');
 const popupElementText = document.querySelector('.popup__text');
@@ -33,19 +33,19 @@ function togglePopup(popup) {
 
 function addCardEvents(card) {
   //1 добавить слушателя на сердечко
-  const like = card.querySelector('.element__like');
-  like.addEventListener('click', function () {
-    like.classList.toggle('element__like_active');
+  const like = card.querySelector('.card__like');
+  like.addEventListener('click', () => {
+    like.classList.toggle('card__like_active');
   });
   //2 добавить слушателя на корзину
-  const bin = card.querySelector('.element__bin');
-  bin.addEventListener('click', function () {
-    const listItem = bin.closest('.element');
+  const bin = card.querySelector('.card__bin');
+  bin.addEventListener('click', () => {
+    const listItem = bin.closest('.card');
     listItem.remove();
   });
   //3 добавить слушателя на картинку с вызовом функции
-  const image = card.querySelector('.element__photo');
-  image.addEventListener('click', function (evt) {
+  const image = card.querySelector('.card__photo');
+  image.addEventListener('click', (evt) => {
     //1 подтянуть изображение из карточки в попап
     popupElementImage.src = evt.target.src;
     //2 подтянуть заголовок карточки в попап
@@ -58,12 +58,12 @@ function addCardEvents(card) {
 //ФУНКЦИОНАЛ СОЗДАНИЯ КАРТОЧКИ
 function createCard(name, link) {
   //1 клонировать template
-  const card = elementTemplate.cloneNode(true);
-  //2 вставить содержимое name в element
-  const title = card.querySelector('.element__title');
+  const card = cardTemplate.cloneNode(true);
+  //2 вставить содержимое name в card
+  const title = card.querySelector('.card__title');
   title.textContent = name;
-  //3 вставить содержимое link в атрибут src element
-  const image = card.querySelector('.element__photo');
+  //3 вставить содержимое link в атрибут src card
+  const image = card.querySelector('.card__photo');
   image.src = link;
   image.alt = name;
   //4 добавить слушателей на иконки и картинку
@@ -77,7 +77,7 @@ function addArrayItems(item) {
   //1 создать карточку
   const newCard = createCard(item.name, item.link);
   //2 добавить новую карточку в список элементов
-  elementsList.append(newCard);
+  cardsList.append(newCard);
 }
 
 
@@ -93,12 +93,11 @@ function formAddSubmitHandler (evt) {
   //2 создать новую карточку
   const newCard = createCard(placeValue, linkValue);
   //3 вставить карточку в начало списка
-  elementsList.prepend(newCard);
+  cardsList.prepend(newCard);
   //4 автоматически закрыть попап
   togglePopup(popupAdd);
   //5 обнулить форму
-  placeInput.value = "";
-  linkInput.value = "";
+  formAdd.reset();
 };
 // Прикрепить обработчик к форме:
 formAdd.addEventListener('submit', formAddSubmitHandler);
@@ -128,7 +127,7 @@ formEdit.addEventListener('submit', formEditSubmitHandler);
 
 //СЛУШАТЕЛИ
 //Cлушатель на кнопку редактирования.
-editButton.addEventListener('click', function () {
+editButton.addEventListener('click', () => {
   //Подтянуть из profileName и profileJob пользователя данные поля формы
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -136,12 +135,12 @@ editButton.addEventListener('click', function () {
 });
 
 //Cлушатель на кнопку добавления новой карточки.
-addButton.addEventListener('click', function () {
+addButton.addEventListener('click', () => {
   togglePopup(popupAdd);
 });
 
 //Cлушатель на крестик.
-page.addEventListener('click', function (evt) {
+page.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('popup__close-icon')) {
     const whichPopup = evt.target.closest('.popup');
     togglePopup(whichPopup);

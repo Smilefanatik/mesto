@@ -1,4 +1,4 @@
-.elements__list {
+.cards__list {
   list-style: none;
   display: grid;
   justify-content: center;
@@ -10,13 +10,13 @@
 }
 
 @media screen and (max-width: 950px) {
-  .elements__list {
+  .cards__list {
     grid-template-columns: repeat(2, 282px);
   }
 }
 
 @media screen and (max-width: 610px) {
-  .elements__list {
+  .cards__list {
     grid-template-columns: 282px;
   }
 }

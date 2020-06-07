@@ -1,4 +1,4 @@
-.element__bin {
+.card__bin {
   height: 19px;
   width: 18px;
   padding: 0;
@@ -15,6 +15,6 @@
   right: 15px;
 }
 
-.element__bin:hover {
+.card__bin:hover {
   opacity: 0.6;
 }
