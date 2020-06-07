@@ -22,7 +22,8 @@ const elementsList = document.querySelector('.elements__list');
 //Подключаем элементы попапа с картинкой
 const popupElementImage = document.querySelector('.popup__image');
 const popupElementText = document.querySelector('.popup__text');
-
+//Подключаем page для делегирования
+const page = document.querySelector('.page');
 
 //ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
 //Функция, которая открывает или закрывает Popup.
@@ -140,12 +141,13 @@ addButton.addEventListener('click', function () {
 });
 
 //Cлушатель на крестик.
-closeIcons.forEach(function (icon) {
-  icon.addEventListener('click', function (evt) {
+page.addEventListener('click', function (evt) {
+  if (evt.target.classList.contains('popup__close-icon')) {
     const whichPopup = evt.target.closest('.popup');
     togglePopup(whichPopup);
-  });
+  }
 });
+
 //___________________________________________________________________________
 
 //НАПОЛНЕНИЕ ELEMENTS 6 КАРТОЧКАМИ
