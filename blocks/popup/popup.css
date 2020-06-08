@@ -6,6 +6,7 @@
 @import url(./__input/_element/popup__input_element_job.css);
 @import url(./__input/_element/popup__input_element_place.css);
 @import url(./__input/_element/popup__input_element_link.css);
+@import url(./__input-error/popup__input-error.css);
 @import url(./__save-button/popup__save-button.css);
 @import url(./__image/popup__image.css);
 @import url(./__text/popup__text.css);

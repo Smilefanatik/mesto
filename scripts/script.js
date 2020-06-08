@@ -25,6 +25,88 @@ const popupElementText = document.querySelector('.popup__text');
 //Подключаем page для делегирования
 const page = document.querySelector('.page');
 
+
+//ФУНКЦИЯ ДОБАВЛЕНИЯ КЛАССА С ОШИБКОЙ
+const showInputError = (form, input, errorMessage) => {
+  const error = form.querySelector(`#${input.id}-error`);
+  input.classList.add('popup__input_element_error');
+  error.textContent = errorMessage;
+  error.classList.add('popup__input-error_active');
+}
+
+//ФУНКЦИЯ УДАЛЕНИЯ КЛАССА С ОШИБКОЙ
+const delInputError = (form, input) => {
+  const error = form.querySelector(`#${input.id}-error`);
+  input.classList.remove('popup__input_element_error');
+  error.classList.remove('popup__input-error_active');
+  error.textContent = '';
+}
+
+//ФУНКЦИЯ ПРОВЕРКИ ВАЛИДНОСТИ ПОЛЯ
+const isValid = (form, input) => {
+  if (input.validity.valid) {
+    delInputError(form, input);
+  } else {
+    showInputError(form, input, input.validationMessage);
+  }
+}
+
+//ФУНКЦИЯ ПРОВЕРКИ ПОЛЕЙ ФОРМЫ НА ВАЛИДНОСТЬ
+const hasInvalidInput = (inputList) => {
+  return inputList.some((input) => {
+    return !input.validity.valid;
+  });
+}
+
+//ФУНКЦИЯ ИЗМЕНЕНИЯ СОСТОЯНИЯ КНОПКИ
+const toggleButtonState = (inputList, button) => {
+  if (hasInvalidInput(inputList)) {
+    button.classList.add('popup__save-button_inactive');
+    button.setAttribute('disabled', true);
+  } else {
+    button.classList.remove('popup__save-button_inactive');
+    button.removeAttribute('disabled');
+  }
+}
+
+//ФУНКЦИЯ ДОБАВЛЕНИЯ ОБРАБОТЧИКА ПОЛЯМ ВВОДА
+const setEvenListeners = (form) => {
+  const inputList = Array.from(form.querySelectorAll('.popup__input'));
+  const button = form.querySelector('.popup__save-button');
+
+  inputList.forEach((input) => {
+    input.addEventListener('input', () => {
+      isValid(form, input);
+      toggleButtonState(inputList, button);
+    });
+  });
+}
+
+//ФУНКЦИЯ ДОБАВЛЕНИЯ ОБРАБОТЧИКОВ ВСЕМ ФОРМАМ
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__container'));
+  formList.forEach((form) => {
+    form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEvenListeners(form);
+  });
+}
+
+enableValidation();
+
+
+
+// formElement.addEventListener('submit', function (evt) {
+//   // Отменим стандартное поведение по сабмиту
+//   evt.preventDefault();
+// });
+
+
+
+//_______________________________________________________________
+
+
 //ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
 //Функция, которая открывает или закрывает Popup.
 function togglePopup(popup) {
