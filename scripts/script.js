@@ -62,17 +62,19 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, button) => {
   if (hasInvalidInput(inputList)) {
     button.classList.add('popup__save-button_inactive');
-    button.setAttribute('disabled', true);
+    // button.setAttribute('disabled', true);
   } else {
     button.classList.remove('popup__save-button_inactive');
-    button.removeAttribute('disabled');
+    // button.removeAttribute('disabled');
   }
 }
 
 //ФУНКЦИЯ ДОБАВЛЕНИЯ ОБРАБОТЧИКА ПОЛЯМ ВВОДА
-const setEvenListeners = (form) => {
+const setEventListeners = (form) => {
   const inputList = Array.from(form.querySelectorAll('.popup__input'));
   const button = form.querySelector('.popup__save-button');
+
+  toggleButtonState(inputList, button);
 
   inputList.forEach((input) => {
     input.addEventListener('input', () => {
@@ -84,25 +86,16 @@ const setEvenListeners = (form) => {
 
 //ФУНКЦИЯ ДОБАВЛЕНИЯ ОБРАБОТЧИКОВ ВСЕМ ФОРМАМ
 const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__container'));
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
   formList.forEach((form) => {
     form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    setEvenListeners(form);
+    setEventListeners(form);
   });
 }
 
 enableValidation();
-
-
-
-// formElement.addEventListener('submit', function (evt) {
-//   // Отменим стандартное поведение по сабмиту
-//   evt.preventDefault();
-// });
-
-
 
 //_______________________________________________________________
 
@@ -166,9 +159,6 @@ function addArrayItems(item) {
 //ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
 // Обработчик «отправки» формы
 function formAddSubmitHandler (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                        // Так мы определим свою логику отправки.
-
   //1 взять из формы название места и ссылку на картинку
   const placeValue = placeInput.value;
   const linkValue = linkInput.value;
@@ -188,9 +178,6 @@ formAdd.addEventListener('submit', formAddSubmitHandler);
 //ФУНКЦИОНАЛ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
 // Обработчик «отправки» формы
 function formEditSubmitHandler (evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                        // Так мы определим свою логику отправки.
-
   // Получить значение полей из свойства value
   const nameValue = nameInput.value;
   const jobValue = jobInput.value;
