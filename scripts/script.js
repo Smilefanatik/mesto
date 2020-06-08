@@ -208,11 +208,14 @@ addButton.addEventListener('click', () => {
   togglePopup(popupAdd);
 });
 
-//Cлушатель на крестик.
+//Cлушатель на крестик и оверлэй.
 page.addEventListener('click', (evt) => {
   if (evt.target.classList.contains('popup__close-icon')) {
     const whichPopup = evt.target.closest('.popup');
     togglePopup(whichPopup);
+  }
+  if (evt.target.classList.contains('popup')) {
+    togglePopup(evt.target);
   }
 });
 
