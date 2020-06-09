@@ -3,6 +3,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const closeIcons = document.querySelectorAll('.popup__close-icon');
 const addButton = document.querySelector('.profile__add-button');
 //Подключаем попапы и формы
+const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const popupAdd = document.querySelector('.popup_type_add-form');
 const popupImage = document.querySelector('.popup_type_image');
@@ -100,12 +101,14 @@ enableValidation();
 //_______________________________________________________________
 
 
-//ФУНКЦИОНАЛ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
+//ФУНКЦИЯ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
 //Функция, которая открывает или закрывает Popup.
 function togglePopup(popup) {
   popup.classList.toggle('popup_opened');
 }
 
+
+//ФУНКЦИЯ ДОБАВЛЕНИЯ СЛУШАТЕЛЕЙ НА ЭЛЕМЕНТЫ КАРТОЧКИ
 function addCardEvents(card) {
   //1 добавить слушателя на сердечко
   const like = card.querySelector('.card__like');
@@ -130,7 +133,7 @@ function addCardEvents(card) {
 });
 };
 
-//ФУНКЦИОНАЛ СОЗДАНИЯ КАРТОЧКИ
+//ФУНКЦИЯ СОЗДАНИЯ КАРТОЧКИ
 function createCard(name, link) {
   //1 клонировать template
   const card = cardTemplate.cloneNode(true);
@@ -147,7 +150,7 @@ function createCard(name, link) {
   return card;
 }
 
-//ФУНКЦИОНАЛ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
+//ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
 function addArrayItems(item) {
   //1 создать карточку
   const newCard = createCard(item.name, item.link);
@@ -155,8 +158,7 @@ function addArrayItems(item) {
   cardsList.append(newCard);
 }
 
-
-//ФУНКЦИОНАЛ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
+//ФУНКЦИЯ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
 // Обработчик «отправки» формы
 function formAddSubmitHandler (evt) {
   //1 взять из формы название места и ссылку на картинку
@@ -174,8 +176,7 @@ function formAddSubmitHandler (evt) {
 // Прикрепить обработчик к форме:
 formAdd.addEventListener('submit', formAddSubmitHandler);
 
-
-//ФУНКЦИОНАЛ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
+//ФУНКЦИЯ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
 // Обработчик «отправки» формы
 function formEditSubmitHandler (evt) {
   // Получить значение полей из свойства value
@@ -219,6 +220,16 @@ page.addEventListener('click', (evt) => {
   }
 });
 
+//Закрытие попапа по нажатию Esc.
+  window.addEventListener('keydown', (evt) => {
+    const popupsList = Array.from(popups);
+    popupsList.forEach((popup) => {
+      if (evt.key === 'Escape') {
+        popup.classList.remove('popup_opened');
+       };
+    });
+    })
+
 //___________________________________________________________________________
 
 //НАПОЛНЕНИЕ ELEMENTS 6 КАРТОЧКАМИ
@@ -251,4 +262,4 @@ const initialCards = [
 ];
 
 //Наполнить element содержимым: методом forEach добавить заголовок и изображение в карточку.
-initialCards.forEach(addArrayItems)
+initialCards.forEach(addArrayItems);
