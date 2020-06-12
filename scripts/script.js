@@ -1,6 +1,5 @@
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
-const closeIcons = document.querySelectorAll('.popup__close-icon');
 const addButton = document.querySelector('.profile__add-button');
 //Попапы и формы.
 const popups = document.querySelectorAll('.popup');
@@ -84,7 +83,7 @@ function addArrayItems(item) {
 
 //ФУНКЦИЯ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
 // Обработчик «отправки» формы.
-function formAddSubmitHandler (evt) {
+function formAddSubmitHandler () {
   //1 взять из формы название места и ссылку на картинку.
   const placeValue = placeInput.value;
   const linkValue = linkInput.value;
@@ -102,7 +101,7 @@ formAdd.addEventListener('submit', formAddSubmitHandler);
 
 //ФУНКЦИЯ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
 // Обработчик «отправки» формы.
-function formEditSubmitHandler (evt) {
+function formEditSubmitHandler () {
   // Получить значение полей из свойства value.
   const nameValue = nameInput.value;
   const jobValue = jobInput.value;
