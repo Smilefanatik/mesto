@@ -1,4 +1,5 @@
 import Card from './Card.js';
+import { FormValidator, forms } from './validation.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
