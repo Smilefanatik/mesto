@@ -1,5 +1,5 @@
 import Card from './Card.js';
-import { FormValidator, forms } from './validation.js';
+import { FormValidator, formAdd, formEdit } from './validation.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
@@ -8,8 +8,7 @@ const addButton = document.querySelector('.profile__add-button');
 const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const popupAdd = document.querySelector('.popup_type_add-form');
-const formEdit = document.querySelector('.popup__container_type_edit-profile');
-const formAdd = document.querySelector('.popup__container_type_add-form');
+
 //Поля ввода.
 const nameInput = document.querySelector('.popup__input_element_name');
 const jobInput = document.querySelector('.popup__input_element_job');

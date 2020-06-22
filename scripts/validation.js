@@ -1,4 +1,6 @@
-export const forms = document.querySelectorAll('.popup__form');
+// export const forms = document.querySelectorAll('.popup__form');
+export const formEdit = document.querySelector('.popup__container_type_edit-profile');
+export const formAdd = document.querySelector('.popup__container_type_add-form');
 
 const object = {
   formSelector: '.popup__form',
@@ -15,7 +17,7 @@ export class FormValidator {
     this._form = form;
   }
 
-  //ФУНКЦИЯ ДОБАВЛЕНИЯ КЛАССА С ОШИБКОЙ
+  //ДОБАВЛЕНИЕ КЛАССА С ОШИБКОЙ
   _showInputError(form, input, errorMessage) {
     const error = form.querySelector(`#${input.id}-error`);
     input.classList.add(this._object.inputErrorClass);
@@ -23,7 +25,7 @@ export class FormValidator {
     error.classList.add(this._object.errorClass);
   }
 
-  //ФУНКЦИЯ УДАЛЕНИЯ КЛАССА С ОШИБКОЙ
+  //УДАЛЕНИЕ КЛАССА С ОШИБКОЙ
   _delInputError(form, input) {
     const error = form.querySelector(`#${input.id}-error`);
     input.classList.remove(this._object.inputErrorClass);
@@ -31,7 +33,7 @@ export class FormValidator {
     error.textContent = '';
   }
 
-  //ФУНКЦИЯ ПРОВЕРКИ ВАЛИДНОСТИ ПОЛЯ
+  //ПРОВЕРКА ВАЛИДНОСТИ ПОЛЯ
   _ValidityState(form, input) {
     if (input.validity.valid) {
       this._delInputError(form, input);
@@ -40,14 +42,14 @@ export class FormValidator {
     }
   }
 
-  //ФУНКЦИЯ ПРОВЕРКИ ПОЛЕЙ ФОРМЫ НА ВАЛИДНОСТЬ
+  //ПРОВЕРКА ПОЛЕЙ ФОРМЫ НА ВАЛИДНОСТЬ
   _hasInvalidInput(inputList) {
     return inputList.some((input) => {
       return !input.validity.valid;
     });
   }
 
-  //ФУНКЦИЯ ИЗМЕНЕНИЯ СОСТОЯНИЯ КНОПКИ
+  //ИЗМЕНЕНИЕ СОСТОЯНИЯ КНОПКИ
   _toggleButtonState(inputList, button) {
     if (this._hasInvalidInput(inputList)) {
       button.classList.add(this._object.inactiveButtonClass);
@@ -58,7 +60,7 @@ export class FormValidator {
     }
   }
 
-  //ФУНКЦИЯ ДОБАВЛЕНИЯ ОБРАБОТЧИКА ПОЛЯМ ВВОДА
+  //ДОБАВЛЕНИЕ ОБРАБОТЧИКОВ ПОЛЯМ ВВОДА
   _setEventListeners(form) {
     const inputList = Array.from(form.querySelectorAll(this._object.inputSelector));
     const button = form.querySelector(this._object.submitButtonSelector);
@@ -73,7 +75,13 @@ export class FormValidator {
     });
   }
 
-  //ФУНКЦИЯ ДОБАВЛЕНИЯ ОБРАБОТЧИКОВ ВСЕМ ФОРМАМ
+  //ОЧИСТКА ВАЛИДАЦИИ
+  clearForm() {
+    this._form.reset();
+    this._form.enableValidation();
+  }
+
+  //ВАЛИДАЦИЯ ФОРМЫ
   enableValidation() {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
@@ -83,8 +91,12 @@ export class FormValidator {
     };
 }
 
+export const validatedFormEdit = new FormValidator(object, formEdit);
+validatedFormEdit.enableValidation();
+export const validatedFormAdd = new FormValidator(object, formAdd);
+validatedFormAdd.enableValidation();
 
-forms.forEach((form) => {
-  const validatedForm = new FormValidator(object, form);
-  validatedForm.enableValidation();
-})
+// forms.forEach((form) => {
+//   const validatedForm = new FormValidator(object, form);
+//   validatedForm.enableValidation();
+// })
