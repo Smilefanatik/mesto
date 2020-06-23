@@ -1,4 +1,3 @@
-// export const forms = document.querySelectorAll('.popup__form');
 export const formEdit = document.querySelector('.popup__container_type_edit-profile');
 export const formAdd = document.querySelector('.popup__container_type_add-form');
 
@@ -77,8 +76,10 @@ export class FormValidator {
 
   //ОЧИСТКА ВАЛИДАЦИИ
   clearForm() {
-    this._form.reset();
-    this._form.enableValidation();
+    const inputList = Array.from(this._form.querySelectorAll(this._object.inputSelector));
+    inputList.forEach((input) => {
+      this._delInputError(this._form, input);
+      });
   }
 
   //ВАЛИДАЦИЯ ФОРМЫ
@@ -95,8 +96,3 @@ export const validatedFormEdit = new FormValidator(object, formEdit);
 validatedFormEdit.enableValidation();
 export const validatedFormAdd = new FormValidator(object, formAdd);
 validatedFormAdd.enableValidation();
-
-// forms.forEach((form) => {
-//   const validatedForm = new FormValidator(object, form);
-//   validatedForm.enableValidation();
-// })

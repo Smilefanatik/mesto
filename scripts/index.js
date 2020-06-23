@@ -1,5 +1,5 @@
 import Card from './Card.js';
-import { FormValidator, formAdd, formEdit } from './validation.js';
+import { FormValidator, formAdd, formEdit, validatedFormEdit, validatedFormAdd } from './validation.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
@@ -75,6 +75,7 @@ formEdit.addEventListener('submit', formEditSubmitHandler);
 //СЛУШАТЕЛИ
 //Cлушатель на кнопку редактирования.
 editButton.addEventListener('click', () => {
+  validatedFormEdit.clearForm();
   //Подтянуть из profileName и profileJob пользователя данные поля формы
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -83,6 +84,8 @@ editButton.addEventListener('click', () => {
 
 //Cлушатель на кнопку добавления новой карточки.
 addButton.addEventListener('click', () => {
+  formAdd.reset();
+  validatedFormAdd.clearForm();
   togglePopup(popupAdd);
 });
 
