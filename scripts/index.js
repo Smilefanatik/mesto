@@ -1,5 +1,5 @@
 import Card from './Card.js';
-import { FormValidator, formAdd, formEdit, validatedFormEdit, validatedFormAdd } from './validation.js';
+import { FormValidator, formAdd, formEdit, validatedFormEdit, validatedFormAdd } from './FormValidator.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
