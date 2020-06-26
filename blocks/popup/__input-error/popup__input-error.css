@@ -6,4 +6,11 @@
   color: #FF0000;
   margin-top: 5px;
   display: none;
+  width: 358px;
+}
+
+@media screen and (max-width: 500px) {
+  .popup__input-error {
+    width: 200px;
+ }
 }

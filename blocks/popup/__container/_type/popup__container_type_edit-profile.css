@@ -7,7 +7,7 @@
 @media screen and (max-width: 500px) {
   .popup__container_type_edit-profile {
     padding: 30px 20px;
-    width: 240px;
+    width: 220px;
     align-items: center;
  }
 }
