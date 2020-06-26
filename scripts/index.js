@@ -49,6 +49,7 @@ function formAddSubmitHandler () {
   togglePopup(popupAdd);
   //6 обнулить форму.
   formAdd.reset();
+  validatedFormAdd.clearForm();
 };
 // Прикрепить обработчик к форме:
 formAdd.addEventListener('submit', formAddSubmitHandler);
@@ -84,8 +85,6 @@ editButton.addEventListener('click', () => {
 
 //Cлушатель на кнопку добавления новой карточки.
 addButton.addEventListener('click', () => {
-  formAdd.reset();
-  validatedFormAdd.clearForm();
   togglePopup(popupAdd);
 });
 

@@ -80,6 +80,8 @@ export class FormValidator {
     inputList.forEach((input) => {
       this._delInputError(this._form, input);
       });
+    const button = this._form.querySelector(this._object.submitButtonSelector);
+    this._toggleButtonState(inputList, button);
   }
 
   //ВАЛИДАЦИЯ ФОРМЫ
