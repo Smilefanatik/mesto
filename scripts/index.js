@@ -40,7 +40,7 @@ function formAddSubmitHandler () {
   const placeValue = placeInput.value;
   const linkValue = linkInput.value;
   //2 создать экземпляр карточки.
-  const newCard = new Card(placeValue, linkValue);
+  const newCard = new Card(placeValue, linkValue, '.card__template');
   //3 наполнить карточку.
   const cardElement = newCard.generateCard();
   //4 вставить карточку в начало списка.
@@ -142,7 +142,7 @@ const initialCards = [
 //ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
 function addArrayItems(item) {
   //1 создать экземпляр карточки.
-  const newCard = new Card(item.name, item.link);
+  const newCard = new Card(item.name, item.link, '.card__template');
   //2 создать и наполнить карточку.
   const cardElement = newCard.generateCard();
   //3 добавить новую карточку в список элементов.

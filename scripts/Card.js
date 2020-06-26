@@ -1,14 +1,15 @@
 import { popupImage, popupElementImage, popupElementText, togglePopup } from './index.js';
 
 export default class Card {
-  constructor(name, link) {
+  constructor(name, link, cardSelector) {
     this._title = name;
     this._link = link;
+    this._cardSelector = cardSelector
   }
 
   _getTemplate() {
     const cardElement = document
-      .querySelector('.card__template')
+      .querySelector(this._cardSelector)
       .content
       .querySelector('.card')
       .cloneNode(true);
