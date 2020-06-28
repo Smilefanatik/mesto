@@ -1,5 +1,6 @@
 import Card from './Card.js';
-import { FormValidator, formAdd, formEdit, validatedFormEdit, validatedFormAdd } from './FormValidator.js';
+import { FormValidator, formAdd, formEdit } from './FormValidator.js';
+import { object, initialCards } from './utils.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
@@ -8,7 +9,6 @@ const addButton = document.querySelector('.profile__add-button');
 const popups = document.querySelectorAll('.popup');
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const popupAdd = document.querySelector('.popup_type_add-form');
-
 //Поля ввода.
 const nameInput = document.querySelector('.popup__input_element_name');
 const jobInput = document.querySelector('.popup__input_element_job');
@@ -25,6 +25,12 @@ const page = document.querySelector('.page');
 export const popupImage = document.querySelector('.popup_type_image');
 export const popupElementImage = document.querySelector('.popup__image');
 export const popupElementText = document.querySelector('.popup__text');
+// Валидация полей формы.
+const validatedFormEdit = new FormValidator(object, formEdit);
+validatedFormEdit.enableValidation();
+const validatedFormAdd = new FormValidator(object, formAdd);
+validatedFormAdd.enableValidation();
+
 
 
 //ФУНКЦИЯ ОТКРЫТИЯ И ЗАКРЫТИЯ ПОПАПА
@@ -110,35 +116,6 @@ page.addEventListener('click', (evt) => {
     })
 
 //___________________________________________________________________________
-//НАПОЛНЕНИЕ CARDS 6 КАРТОЧКАМИ
-//При загрузке на странице должно быть 6 карточек, которые добавит JavaScript на основе готового массива.
-const initialCards = [
-  {
-    name: 'Лес',
-    link: './images/photo_sequoia.jpg'
-  },
-  {
-    name: 'Герой асфальта',
-    link: './images/photo_road.jpg'
-  },
-  {
-    name: 'Крапива',
-    link: './images/photo4.jpg'
-  },
-  {
-    name: 'Фантазия',
-    link: './images/photo_carpet.jpg'
-  },
-  {
-    name: 'Пати бас',
-    link: './images/photo5.jpg'
-  },
-  {
-    name: 'Полянка',
-    link: './images/photo_meadow.jpg'
-  }
-];
-
 //ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
 function addArrayItems(item) {
   //1 создать экземпляр карточки.

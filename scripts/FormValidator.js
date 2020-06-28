@@ -1,15 +1,6 @@
 export const formEdit = document.querySelector('.popup__container_type_edit-profile');
 export const formAdd = document.querySelector('.popup__container_type_add-form');
 
-const object = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  inputErrorClass: 'popup__input_element_error',
-  errorClass: 'popup__input-error_active'
-};
-
 export class FormValidator {
   constructor(object, form) {
     this._object = object;
@@ -93,8 +84,3 @@ export class FormValidator {
     this._setEventListeners(this._form);
     };
 }
-
-export const validatedFormEdit = new FormValidator(object, formEdit);
-validatedFormEdit.enableValidation();
-export const validatedFormAdd = new FormValidator(object, formAdd);
-validatedFormAdd.enableValidation();

@@ -28,30 +28,34 @@ export default class Card {
     return this._element;
   }
 
+  _likeCard() {
+    like.classList.toggle('card__like_active');
+  };
+
+  _deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
+
+  _handleCardPhoto() {
+    //1 подтянуть изображение из карточки в попап.
+    popupElementImage.src = evt.target.src;
+    //2 подтянуть заголовок карточки в попап.
+    popupElementText.textContent = evt.target.alt;
+    //3 открыть попап.
+    togglePopup(popupImage);
+  }
+
   //МЕТОД ДОБАВЛЕНИЯ СЛУШАТЕЛЕЙ НА ЭЛЕМЕНТЫ КАРТОЧКИ
   _setEventListeners() {
     //1 добавить слушателя на сердечко.
     const like = this._element.querySelector('.card__like');
-    like.addEventListener('click', () => {
-      like.classList.toggle('card__like_active');
-    });
+    like.addEventListener('click', this._likeCard);
     //2 добавить слушателя на корзину.
     const bin = this._element.querySelector('.card__bin');
-    bin.addEventListener('click', () => {
-      const listItem = bin.closest('.card');
-      listItem.remove();
-    });
+    bin.addEventListener('click', this._deleteCard);
     //3 добавить слушателя на картинку с вызовом функции.
     const image = this._element.querySelector('.card__photo');
-    image.addEventListener('click', (evt) => {
-      //1 подтянуть изображение из карточки в попап.
-      popupElementImage.src = evt.target.src;
-      //2 подтянуть заголовок карточки в попап.
-      popupElementText.textContent = evt.target.alt;
-      //3 открыть попап.
-      togglePopup(popupImage);
-    });
-  };
+    image.addEventListener('click', this._handleCardPhoto);
+  }
 }
-
-
