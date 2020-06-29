@@ -19,6 +19,9 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    this._image = this._element.querySelector('.card__photo');
+    this._like = this._element.querySelector('.card__like');
+    this._bin = this._element.querySelector('.card__bin');
     this._setEventListeners();
 
     this._element.querySelector('.card__title').textContent = this._title;
@@ -29,7 +32,7 @@ export default class Card {
   }
 
   _likeCard() {
-    like.classList.toggle('card__like_active');
+    return this._like.classList.toggle('card__like_active');
   };
 
   _deleteCard() {
@@ -37,7 +40,7 @@ export default class Card {
     this._element = null;
   }
 
-  _handleCardPhoto() {
+  _handleCardPhoto(evt) {
     //1 подтянуть изображение из карточки в попап.
     popupElementImage.src = evt.target.src;
     //2 подтянуть заголовок карточки в попап.
@@ -49,13 +52,10 @@ export default class Card {
   //МЕТОД ДОБАВЛЕНИЯ СЛУШАТЕЛЕЙ НА ЭЛЕМЕНТЫ КАРТОЧКИ
   _setEventListeners() {
     //1 добавить слушателя на сердечко.
-    const like = this._element.querySelector('.card__like');
-    like.addEventListener('click', this._likeCard);
+    this._like.addEventListener('click', () => this._likeCard());
     //2 добавить слушателя на корзину.
-    const bin = this._element.querySelector('.card__bin');
-    bin.addEventListener('click', this._deleteCard);
+    this._bin.addEventListener('click', () => this._deleteCard());
     //3 добавить слушателя на картинку с вызовом функции.
-    const image = this._element.querySelector('.card__photo');
-    image.addEventListener('click', this._handleCardPhoto);
+    this._image.addEventListener('click', (evt) => this._handleCardPhoto(evt));
   }
 }
