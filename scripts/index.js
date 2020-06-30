@@ -22,9 +22,9 @@ const profileJob = document.querySelector('.profile__job');
 //Page для делегирования.
 const page = document.querySelector('.page');
 //Элементы попапа с картинкой.
-export const popupImage = document.querySelector('.popup_type_image');
-export const popupElementImage = document.querySelector('.popup__image');
-export const popupElementText = document.querySelector('.popup__text');
+const popupImage = document.querySelector('.popup_type_image');
+const popupElementImage = document.querySelector('.popup__image');
+const popupElementText = document.querySelector('.popup__text');
 // Валидация полей формы.
 const validatedFormEdit = new FormValidator(object, formEdit);
 validatedFormEdit.enableValidation();

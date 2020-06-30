@@ -1,4 +1,4 @@
-import { popupImage, popupElementImage, popupElementText, togglePopup } from './index.js';
+import { togglePopup } from './index.js';
 
 export default class Card {
   constructor(name, link, cardSelector) {
@@ -40,11 +40,15 @@ export default class Card {
     this._element = null;
   }
 
-  _handleCardPhoto(evt) {
-    //1 подтянуть изображение из карточки в попап.
-    popupElementImage.src = evt.target.src;
+  _handleCardPhoto() {
+    const popupImage = document.querySelector('.popup_type_image');
+    const popupElementImage = document.querySelector('.popup__image');
+    const popupElementText = document.querySelector('.popup__text');
+    //1 подтянуть изображение и alt из карточки в попап.
+    popupElementImage.src = this._link;
+    popupElementImage.alt = this._title;
     //2 подтянуть заголовок карточки в попап.
-    popupElementText.textContent = evt.target.alt;
+    popupElementText.textContent = this._title;
     //3 открыть попап.
     togglePopup(popupImage);
   }
@@ -56,6 +60,6 @@ export default class Card {
     //2 добавить слушателя на корзину.
     this._bin.addEventListener('click', () => this._deleteCard());
     //3 добавить слушателя на картинку с вызовом функции.
-    this._image.addEventListener('click', (evt) => this._handleCardPhoto(evt));
+    this._image.addEventListener('click', () => this._handleCardPhoto());
   }
 }
