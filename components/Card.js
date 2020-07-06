@@ -1,4 +1,4 @@
-import { togglePopup } from './index.js';
+import { togglePopup } from '../pages/index.js';
 
 export default class Card {
   constructor(name, link, cardSelector) {

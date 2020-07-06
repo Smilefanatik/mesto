@@ -1,7 +1,7 @@
-import Card from './Card.js';
-import { FormValidator, formAdd, formEdit } from './FormValidator.js';
-import { object, initialCards } from './utils.js';
-
+import Card from '../components/Card.js';
+import { FormValidator, formAdd, formEdit } from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import { object, initialCards } from '../utils/utils.js';
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -15,7 +15,7 @@ const jobInput = document.querySelector('.popup__input_element_job');
 const placeInput = document.querySelector('.popup__input__element_place');
 const linkInput = document.querySelector('.popup__input_element_link');
 //Список элементов для вывода первых 6 карточек мест.
-const cardsList = document.querySelector('.cards__list');
+// const cardsList = document.querySelector('.cards__list');
 // Элементы профиля, куда должны быть вставлены значения value полей.
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
@@ -115,16 +115,18 @@ page.addEventListener('click', (evt) => {
     });
     })
 
-//___________________________________________________________________________
-//ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
-function addArrayItems(item) {
-  //1 создать экземпляр карточки.
-  const newCard = new Card(item.name, item.link, '.card__template');
-  //2 создать и наполнить карточку.
-  const cardElement = newCard.generateCard();
-  //3 добавить новую карточку в список элементов.
-  cardsList.append(cardElement);
-}
+//Создать и наполнить новую карточку, вставить в общий список.
+  const cardsList = new Section({
+    items: initialCards,
+    renderer: (item) => {
+      //1 создать экземпляр карточки.
+      const newCard = new Card(item.name, item.link, '.card__template');
+      //2 создать и наполнить карточку.
+      const cardElement = newCard.generateCard();
+      //3 вернуть карточку.
+      cardsList.addItem(cardElement);
+    }
+  },'.cards__list');
 
-//Наполнить element содержимым: методом forEach добавить заголовок и изображение в карточку.
-initialCards.forEach(addArrayItems);
+  cardsList.renderElements();
+
