@@ -1,4 +1,4 @@
-import { togglePopup } from '../pages/index.js';
+// import { togglePopup } from '../pages/index.js';
 
 export default class Card {
   constructor(name, link, cardSelector) {
@@ -50,7 +50,7 @@ export default class Card {
     //2 подтянуть заголовок карточки в попап.
     popupElementText.textContent = this._title;
     //3 открыть попап.
-    togglePopup(popupImage);
+    // togglePopup(popupImage);
   }
 
   //МЕТОД ДОБАВЛЕНИЯ СЛУШАТЕЛЕЙ НА ЭЛЕМЕНТЫ КАРТОЧКИ
