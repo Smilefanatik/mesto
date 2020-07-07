@@ -2,7 +2,9 @@ import Card from '../components/Card.js';
 import { FormValidator, formAdd, formEdit } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import { object, initialCards } from '../utils/utils.js';
+
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -27,9 +29,8 @@ const popupAdd = new Popup('.popup_type_add-form');
 popupAdd.setEventListeners();
 const popupEdit = new Popup('.popup_type_edit-profile');
 popupEdit.setEventListeners();
-const popupImage = new Popup('.popup_type_image');
+const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
-
 //Создать и наполнить новую карточку, вставить в общий список.
 const cardsList = new Section({
   items: initialCards,
@@ -82,7 +83,6 @@ function formEditSubmitHandler() {
 // Прикрепить обработчик к форме:
 formEdit.addEventListener('submit', formEditSubmitHandler);
 
-//___________________________________________________________________________
 
 // СЛУШАТЕЛИ
   // Cлушатель на кнопку редактирования.
