@@ -26,5 +26,6 @@ export default class PopupWithForm extends Popup {
       this._submitHandler(this._getInputValues());
       this._form.reset();
     });
+    this._form.removeEventListener('submit', this._submitHandler);
   }
 }

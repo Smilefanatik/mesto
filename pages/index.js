@@ -4,6 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import { object, initialCards } from '../utils/utils.js';
+import UserInfo from '../components/UserInfo.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
@@ -13,9 +14,6 @@ const nameInput = document.querySelector('.popup__input_element_name');
 const jobInput = document.querySelector('.popup__input_element_job');
 const placeInput = document.querySelector('.popup__input__element_place');
 const linkInput = document.querySelector('.popup__input_element_link');
-//Элементы профиля, куда должны быть вставлены значения value полей.
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
 //Элементы popup с картинкой.
 const popupElementImage = document.querySelector('.popup__image');
 const popupElementText = document.querySelector('.popup__text');
@@ -25,6 +23,10 @@ const validatedFormEdit = new FormValidator(object, formEdit);
 validatedFormEdit.enableValidation();
 const validatedFormAdd = new FormValidator(object, formAdd);
 validatedFormAdd.enableValidation();
+
+//Popup с всплывающим изображением.
+const popupImage = new PopupWithImage('.popup_type_image');
+popupImage.setEventListeners();
 
 // PopUp с формой добавления новой карточки.
 const popupAdd = new PopupWithForm('.popup_type_add-form',
@@ -49,23 +51,20 @@ popupAdd.setEventListeners();
 const popupEdit = new PopupWithForm('.popup_type_edit-profile',
   {
     submitHandler: (values) => {
-      // 1 получить значение полей из объекта values.
-      const nameValue = values.name;
-      const jobValue = values.job;
-      // 2 вставить новые значения с помощью textContent.
-      profileName.textContent = nameValue;
-      profileJob.textContent = jobValue;
-      //3 автоматически закрыть попап.
+      //1 подставить новые значения полей в профиль пользователя.
+      userInfo.setUserInfo(values);
+      //2 автоматически закрыть попап.
       popupEdit.close();
     }
   });
 
 popupEdit.setEventListeners();
 
-//Popup с всплывающим изображением.
-const popupImage = new PopupWithImage('.popup_type_image');
-popupImage.setEventListeners();
-
+//Профиль пользователя.
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job'
+});
 
 //Создать и наполнить новую карточку, вставить в общий список.
 const cardsList = new Section({
@@ -87,9 +86,10 @@ cardsList.renderElements();
 // Cлушатель на кнопку редактирования.
 editButton.addEventListener('click', () => {
   validatedFormEdit.clearForm();
-  //Подтянуть из profileName и profileJob пользователя данные поля формы
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
+  //Подтянуть данные пользователя в popup.
+  userInfo.getUserInfo();
+  nameInput.value = userInfo.getUserInfo().name;
+  jobInput.value = userInfo.getUserInfo().job;
   popupEdit.open();
 });
 
