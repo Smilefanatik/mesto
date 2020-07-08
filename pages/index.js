@@ -1,8 +1,8 @@
 import Card from '../components/Card.js';
 import { FormValidator, formAdd, formEdit } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
 import { object, initialCards } from '../utils/utils.js';
 
 //Иконки и кнопки.
@@ -16,27 +16,63 @@ const linkInput = document.querySelector('.popup__input_element_link');
 //Элементы профиля, куда должны быть вставлены значения value полей.
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-//Элементы попапа с картинкой.
+//Элементы popup с картинкой.
 const popupElementImage = document.querySelector('.popup__image');
 const popupElementText = document.querySelector('.popup__text');
+
 // Валидация полей формы.
 const validatedFormEdit = new FormValidator(object, formEdit);
 validatedFormEdit.enableValidation();
 const validatedFormAdd = new FormValidator(object, formAdd);
 validatedFormAdd.enableValidation();
-//Попапы
-const popupAdd = new Popup('.popup_type_add-form');
+
+// PopUp с формой добавления новой карточки.
+const popupAdd = new PopupWithForm('.popup_type_add-form',
+  {
+    submitHandler: (values) => {
+      //1 создать экземпляр карточки.
+      const newCard = new Card(values, '.card__template');
+      //2 наполнить карточку.
+      const cardElement = newCard.generateCard();
+      //3 вставить карточку в начало списка.
+      cardsList.addItem(cardElement);
+      //4 автоматически закрыть popup.
+      popupAdd.close();
+      //6 обнулить форму.
+      validatedFormAdd.clearForm();
+    }
+  }
+);
 popupAdd.setEventListeners();
-const popupEdit = new Popup('.popup_type_edit-profile');
+
+//Popup с формой редактирования профиля.
+const popupEdit = new PopupWithForm('.popup_type_edit-profile',
+  {
+    submitHandler: (values) => {
+      // 1 получить значение полей из объекта values.
+      const nameValue = values.name;
+      const jobValue = values.job;
+      // 2 вставить новые значения с помощью textContent.
+      profileName.textContent = nameValue;
+      profileJob.textContent = jobValue;
+      //3 автоматически закрыть попап.
+      popupEdit.close();
+    }
+  });
+
 popupEdit.setEventListeners();
+
+//Popup с всплывающим изображением.
 const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
+
+
 //Создать и наполнить новую карточку, вставить в общий список.
 const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
     //1 создать экземпляр карточки.
-    const newCard = new Card(item.name, item.link, '.card__template');
+    const newCard = new Card(item, '.card__template');
     //2 создать и наполнить карточку.
     const cardElement = newCard.generateCard();
     //3 вернуть карточку.
@@ -47,45 +83,8 @@ const cardsList = new Section({
 cardsList.renderElements();
 
 
-//ФУНКЦИЯ ДОБАВЛЕНИЯ НОВЫХ КАРТОЧЕК ПОЛЬЗОВАТЕЛЕМ
-// Обработчик «отправки» формы.
-function formAddSubmitHandler() {
-  //1 взять из формы название места и ссылку на картинку.
-  const placeValue = placeInput.value;
-  const linkValue = linkInput.value;
-  //2 создать экземпляр карточки.
-  const newCard = new Card(placeValue, linkValue, '.card__template');
-  //3 наполнить карточку.
-  const cardElement = newCard.generateCard();
-  //4 вставить карточку в начало списка.
-  cardsList.prepend(cardElement);
-  //5 автоматически закрыть попап.
-  popupAdd.close();
-  //6 обнулить форму.
-  formAdd.reset();
-  validatedFormAdd.clearForm();
-};
-// Прикрепить обработчик к форме:
-formAdd.addEventListener('submit', formAddSubmitHandler);
-
-//ФУНКЦИЯ СОХРАНЕНИЯ ФОРМЫ РЕДАКТИРОВАНИЯ
-  // Обработчик «отправки» формы.
-function formEditSubmitHandler() {
-  // Получить значение полей из свойства value.
-  const nameValue = nameInput.value;
-  const jobValue = jobInput.value;
-  // Вставить новые значения с помощью textContent.
-  profileName.textContent = nameValue;
-  profileJob.textContent = jobValue;
-  //Автоматически закрыть попап.
-  popupEdit.close();
-}
-// Прикрепить обработчик к форме:
-formEdit.addEventListener('submit', formEditSubmitHandler);
-
-
 // СЛУШАТЕЛИ
-  // Cлушатель на кнопку редактирования.
+// Cлушатель на кнопку редактирования.
 editButton.addEventListener('click', () => {
   validatedFormEdit.clearForm();
   //Подтянуть из profileName и profileJob пользователя данные поля формы
@@ -94,7 +93,7 @@ editButton.addEventListener('click', () => {
   popupEdit.open();
 });
 
-  //Cлушатель на кнопку добавления новой карточки.
+//Cлушатель на кнопку добавления новой карточки.
 addButton.addEventListener('click', () => {
   popupAdd.open();
 });

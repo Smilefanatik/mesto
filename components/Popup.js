@@ -19,7 +19,7 @@ export default class Popup {
   //Метод добавления слушателей.
   setEventListeners() {
     //Добавление слушателя всему элементу popup по оверлей.
-    this._popupSelector.addEventListener('click', () => this.close());
+    // this._popupSelector.addEventListener('click', () => this.close());
     //Закрытие popup по нажатию на крестик.
     this._closeIcon = this._popupSelector.querySelector('.popup__close-icon');
     this._closeIcon.addEventListener('click', () => this.close());

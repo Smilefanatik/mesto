@@ -1,9 +1,9 @@
 // import { togglePopup } from '../pages/index.js';
 
 export default class Card {
-  constructor(name, link, cardSelector) {
-    this._title = name;
-    this._link = link;
+  constructor(data, cardSelector) {
+    this._title = data.name;
+    this._link = data.link;
     this._cardSelector = cardSelector
   }
 
