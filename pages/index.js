@@ -1,24 +1,22 @@
 import Card from '../components/Card.js';
-import { FormValidator, formAdd, formEdit } from '../components/FormValidator.js';
+import { FormValidator } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-import { object, initialCards } from '../utils/utils.js';
 import UserInfo from '../components/UserInfo.js';
+import { object, initialCards } from '../utils/utils.js';
 
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
+
 //Поля ввода.
 const nameInput = document.querySelector('.popup__input_element_name');
 const jobInput = document.querySelector('.popup__input_element_job');
-const placeInput = document.querySelector('.popup__input__element_place');
-const linkInput = document.querySelector('.popup__input_element_link');
-//Элементы popup с картинкой.
-const popupElementImage = document.querySelector('.popup__image');
-const popupElementText = document.querySelector('.popup__text');
 
 // Валидация полей формы.
+const formEdit = document.querySelector('.popup__container_type_edit-profile');
+const formAdd = document.querySelector('.popup__container_type_add-form');
 const validatedFormEdit = new FormValidator(object, formEdit);
 validatedFormEdit.enableValidation();
 const validatedFormAdd = new FormValidator(object, formAdd);
@@ -33,14 +31,19 @@ const popupAdd = new PopupWithForm('.popup_type_add-form',
   {
     submitHandler: (values) => {
       //1 создать экземпляр карточки.
-      const newCard = new Card(values, '.card__template');
+      const newCard = new Card(values, '.card__template',
+        {
+          handleCardClick: () => {
+            popupImage.open(values)
+          }
+        });
       //2 наполнить карточку.
       const cardElement = newCard.generateCard();
       //3 вставить карточку в начало списка.
       cardsList.addItem(cardElement);
       //4 автоматически закрыть popup.
       popupAdd.close();
-      //6 обнулить форму.
+      //5 обнулить форму.
       validatedFormAdd.clearForm();
     }
   }
@@ -53,7 +56,7 @@ const popupEdit = new PopupWithForm('.popup_type_edit-profile',
     submitHandler: (values) => {
       //1 подставить новые значения полей в профиль пользователя.
       userInfo.setUserInfo(values);
-      //2 автоматически закрыть попап.
+      //2 автоматически закрыть popup.
       popupEdit.close();
     }
   });
@@ -71,7 +74,12 @@ const cardsList = new Section({
   items: initialCards,
   renderer: (item) => {
     //1 создать экземпляр карточки.
-    const newCard = new Card(item, '.card__template');
+    const newCard = new Card(item, '.card__template',
+    {
+      handleCardClick: () => {
+        popupImage.open(item)
+      }
+    });
     //2 создать и наполнить карточку.
     const cardElement = newCard.generateCard();
     //3 вернуть карточку.
@@ -95,5 +103,6 @@ editButton.addEventListener('click', () => {
 
 //Cлушатель на кнопку добавления новой карточки.
 addButton.addEventListener('click', () => {
+  validatedFormAdd.clearForm();
   popupAdd.open();
 });

@@ -1,5 +1,5 @@
-export const formEdit = document.querySelector('.popup__container_type_edit-profile');
-export const formAdd = document.querySelector('.popup__container_type_add-form');
+// export const formEdit = document.querySelector('.popup__container_type_edit-profile');
+// export const formAdd = document.querySelector('.popup__container_type_add-form');
 
 export class FormValidator {
   constructor(object, form) {
