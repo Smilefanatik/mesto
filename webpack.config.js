@@ -1,5 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin'); 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -24,14 +24,18 @@ module.exports = {
         loader: 'html-loader',
       },
       {
-          test: /\.css$/,
-          loader:  [MiniCssExtractPlugin.loader, 'css-loader']
+        test: /\.css$/,
+        loader: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader',
+          // добавьте объект options
+          options: { importLoaders: 1 }
+        }, 'postcss-loader']
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html' // путь к файлу index.html
+      template: './src/index.html' 
     }),
     new MiniCssExtractPlugin()
   ]

@@ -5,10 +5,12 @@ export default class Popup {
   //Метод открытия Popup
   open() {
     this._popupSelector.classList.add('popup_opened');
+
   }
   //Метод закрытия Popup
   close() {
     this._popupSelector.classList.remove('popup_opened');
+    window.removeEventListener('keydown', (evt) => this._handleEscClose(evt));
   }
   //Метод закрытия Popup клавишей esc.
   _handleEscClose(evt) {
@@ -16,6 +18,7 @@ export default class Popup {
       this.close();
     };
   }
+
   //Метод добавления слушателей.
   setEventListeners() {
     //Слушателя закрытия popup по оверлей.
