@@ -97,9 +97,9 @@ cardsList.renderElements();
 editButton.addEventListener('click', () => {
   validatedFormEdit.clearForm();
   //Подтянуть данные пользователя в popup.
-  userInfo.getUserInfo();
-  nameInput.value = userInfo.getUserInfo().name;
-  jobInput.value = userInfo.getUserInfo().job;
+  userInfoData = userInfo.getUserInfo();
+  nameInput.value = userInfoData.name;
+  jobInput.value = userInfoData.job;
   popupEdit.open();
 });
 
