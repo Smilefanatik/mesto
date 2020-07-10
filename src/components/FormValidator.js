@@ -8,27 +8,27 @@ export class FormValidator {
   }
 
   //ДОБАВЛЕНИЕ КЛАССА С ОШИБКОЙ
-  _showInputError(form, input, errorMessage) {
-    const error = form.querySelector(`#${input.id}-error`);
-    input.classList.add(this._object.inputErrorClass);
+  _showInputError(inputElement, errorMessage) {
+    const error = this._form.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.add(this._object.inputErrorClass);
     error.textContent = errorMessage;
     error.classList.add(this._object.errorClass);
   }
 
   //УДАЛЕНИЕ КЛАССА С ОШИБКОЙ
-  _delInputError(form, input) {
-    const error = form.querySelector(`#${input.id}-error`);
-    input.classList.remove(this._object.inputErrorClass);
+  _delInputError(inputElement) {
+    const error = this._form.querySelector(`#${inputElement.id}-error`);
+    inputElement.classList.remove(this._object.inputErrorClass);
     error.classList.remove(this._object.errorClass);
     error.textContent = '';
   }
 
   //ПРОВЕРКА ВАЛИДНОСТИ ПОЛЯ
-  _ValidityState(form, input) {
-    if (input.validity.valid) {
-      this._delInputError(form, input);
+  _ValidityState(inputElement) {
+    if (inputElement.validity.valid) {
+      this._delInputError(inputElement);
     } else {
-      this._showInputError(form, input, input.validationMessage);
+      this._showInputError(inputElement, inputElement.validationMessage);
     }
   }
 
@@ -51,15 +51,15 @@ export class FormValidator {
   }
 
   //ДОБАВЛЕНИЕ ОБРАБОТЧИКОВ ПОЛЯМ ВВОДА
-  _setEventListeners(form) {
-    const inputList = Array.from(form.querySelectorAll(this._object.inputSelector));
-    const button = form.querySelector(this._object.submitButtonSelector);
+  _setEventListeners() {
+    const inputList = Array.from(this._form.querySelectorAll(this._object.inputSelector));
+    const button = this._form.querySelector(this._object.submitButtonSelector);
 
     this._toggleButtonState(inputList, button);
 
     inputList.forEach((input) => {
       input.addEventListener('input', () => {
-        this._ValidityState(form, input);
+        this._ValidityState(input);
         this._toggleButtonState(inputList, button);
       });
     });
@@ -69,7 +69,7 @@ export class FormValidator {
   clearForm() {
     const inputList = Array.from(this._form.querySelectorAll(this._object.inputSelector));
     inputList.forEach((input) => {
-      this._delInputError(this._form, input);
+      this._delInputError(input);
       });
     const button = this._form.querySelector(this._object.submitButtonSelector);
     this._toggleButtonState(inputList, button);
@@ -81,6 +81,6 @@ export class FormValidator {
       evt.preventDefault();
     });
 
-    this._setEventListeners(this._form);
+    this._setEventListeners();
     };
 }
