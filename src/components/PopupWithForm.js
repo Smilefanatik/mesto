@@ -5,9 +5,15 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._submitHandler = submitHandler;
   }
+
+  close() {
+    super.close();
+    this._form.reset();
+  }
+
   //Метод сбора данных полей.
   _getInputValues() {
-    this._inputList = this._popupSelector.querySelectorAll('.popup__input');
+    this._inputList = this._popup.querySelectorAll('.popup__input');
     //Создать пустой объект.
     this._formValues = {};
     //Добавить в объект значения всех полей.
@@ -19,26 +25,13 @@ export default class PopupWithForm extends Popup {
   }
 
   setEventListeners() {
-    this._form = this._popupSelector.querySelector('.popup__form');
+    this._form = this._popup.querySelector('.popup__form');
 
     super.setEventListeners();
-    //Ресет формы при закрытии.
-    this._closeIcon.addEventListener('click', () => {
-      this.close();
-      this._form.reset();
-    });
-    //Слушатель закрытия popup по оверлей.
-    document.addEventListener('click', (evt) => {
-      if (evt.target === this._popupSelector) {
-        this.close();
-        this._form.reset();
-      };
-    });
+
     //Сабмит формы.
     this._form.addEventListener('submit', () => {
       this._submitHandler(this._getInputValues());
-      this._form.reset();
     });
-    this._form.removeEventListener('submit', this._submitHandler);
   }
 }
