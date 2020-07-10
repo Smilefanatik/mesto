@@ -5,6 +5,7 @@
   grid-gap: 20px 18px;
   grid-template-columns: repeat(3, 282px);
   grid-template-rows: auto;
+  grid-auto-rows: 369px;
   padding: 0;
   margin: 0;
 }
