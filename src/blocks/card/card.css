@@ -2,8 +2,9 @@
 @import url(./__group/card__group.css);
 @import url(./__title/card__title.css);
 @import url(./__bin/card__bin.css);
+@import url(./__like-group/card__like-group.css);
 @import url(./__like/card__like.css);
-@import url(./__like/_active/card__like_active.css);
+@import url(./__counter/card__counter.css);
 
 
 .card {
