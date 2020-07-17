@@ -36,33 +36,41 @@
 
     <div class="popup popup_type_edit-profile">
       <form class="popup__container popup__form popup__container_type_edit-profile" novalidate>
-        <button type="reset" class="popup__close-icon popup__close-icon_edit-profile"></button>
+        <button type="reset" class="popup__close-icon"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <input id="name-input" name="name" type="text" value="" class="popup__input popup__input_element_name" placeholder="Имя" minlength="2" maxlength="40" required>
         <span id="name-input-error" class="popup__input-error"></span>
         <input id="job-input" name="job" type="text" value="" class="popup__input popup__input_element_job" placeholder="О себе" minlength="2" maxlength="200" required>
         <span id="job-input-error" class="popup__input-error"></span>
-        <button type="submit" class="popup__save-button popup__save-button_edit-profile">Сохранить</button>
+        <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
     </div>
 
     <div class="popup popup_type_add-form">
       <form class="popup__container popup__form popup__container_type_add-form" novalidate>
-        <button type="reset" class="popup__close-icon popup__close-icon_add-form"></button>
+        <button type="reset" class="popup__close-icon"></button>
         <h2 class="popup__title">Новое место</h2>
         <input id="place-input" name="name" type="text" class="popup__input popup__input__element_place" placeholder="Название" minlength="1" maxlength="30" required>
         <span id="place-input-error" class="popup__input-error"></span>
         <input id="link-input" name="link" type="url" class="popup__input popup__input_element_link" placeholder="Ссылка на картинку" required>
         <span id="link-input-error" class="popup__input-error"></span>
-        <button type="submit" class="popup__save-button popup__save-button_add-form">Создать</button>
+        <button type="submit" class="popup__save-button">Создать</button>
       </form>
     </div>
 
     <div class="popup popup_type_image">
       <div class="popup__container popup__container_type_image">
-        <button type="reset" class="popup__close-icon popup__close-icon_image"></button>
+        <button type="reset" class="popup__close-icon"></button>
         <img class="popup__image" alt="">
         <p class="popup__text"></p>
+      </div>
+    </div>
+
+    <div class="popup popup_type_confirm">
+      <div class="popup__container popup__container_type_confirm">
+        <button type="reset" class="popup__close-icon"></button>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button type="submit" class="popup__save-button">Да</button>
       </div>
     </div>
 

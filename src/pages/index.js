@@ -5,6 +5,7 @@ import { FormValidator } from '../components/FormValidator.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupConfirm from '../components/PopupConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import { object, initialCards } from '../utils/utils.js';
 
@@ -64,6 +65,16 @@ const popupEdit = new PopupWithForm('.popup_type_edit-profile',
   });
 
 popupEdit.setEventListeners();
+
+//Popup удаления карточки.
+export const popupConfirm = new PopupConfirm('.popup_type_confirm',
+  {
+  submitHandler: () => {
+    console.log('salo');
+  }
+});
+
+popupConfirm.setEventListeners();
 
 //Профиль пользователя.
 const userInfo = new UserInfo({
