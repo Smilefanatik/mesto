@@ -134,6 +134,8 @@ addButton.addEventListener('click', () => {
 
 //Слушатель на область редактирования аватара.
 overlay.addEventListener('click', () => {
+  validatedFormAvatar.clearForm();
   popupEditAvatar.open();
+
 }
 )
