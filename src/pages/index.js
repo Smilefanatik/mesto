@@ -9,6 +9,8 @@ import PopupConfirm from '../components/PopupConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import { object, initialCards } from '../utils/utils.js';
 
+
+const overlay = document.querySelector('.profile__overlay');
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -20,10 +22,13 @@ const jobInput = document.querySelector('.popup__input_element_job');
 // Валидация полей формы.
 const formEdit = document.querySelector('.popup__container_type_edit-profile');
 const formAdd = document.querySelector('.popup__container_type_add-form');
+const formAvatar = document.querySelector('.popup__container_type_edit-avatar');
 const validatedFormEdit = new FormValidator(object, formEdit);
 validatedFormEdit.enableValidation();
 const validatedFormAdd = new FormValidator(object, formAdd);
 validatedFormAdd.enableValidation();
+const validatedFormAvatar = new FormValidator(object, formAvatar);
+validatedFormAvatar.enableValidation();
 
 //Popup с всплывающим изображением.
 const popupImage = new PopupWithImage('.popup_type_image');
@@ -66,11 +71,18 @@ const popupEdit = new PopupWithForm('.popup_type_edit-profile',
 
 popupEdit.setEventListeners();
 
+const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
+  submitHandler: (e) => {
+    console.log(e);
+  }
+});
+popupEditAvatar.setEventListeners();
+
+
 //Popup удаления карточки.
 export const popupConfirm = new PopupConfirm('.popup_type_confirm',
   {
   submitHandler: () => {
-    console.log('salo');
   }
 });
 
@@ -119,3 +131,9 @@ addButton.addEventListener('click', () => {
   validatedFormAdd.clearForm();
   popupAdd.open();
 });
+
+//Слушатель на область редактирования аватара.
+overlay.addEventListener('click', () => {
+  popupEditAvatar.open();
+}
+)
