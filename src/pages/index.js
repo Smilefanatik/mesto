@@ -32,6 +32,12 @@ validatedFormAdd.enableValidation();
 const validatedFormAvatar = new FormValidator(object, formAvatar);
 validatedFormAvatar.enableValidation();
 
+//Профиль пользователя.
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  aboutSelector: '.profile__about'
+});
+
 //Popup с всплывающим изображением.
 const popupImage = new PopupWithImage('.popup_type_image');
 popupImage.setEventListeners();
@@ -40,17 +46,20 @@ popupImage.setEventListeners();
 const popupAdd = new PopupWithForm('.popup_type_add-form',
   {
     submitHandler: (values) => {
-      //1 создать экземпляр карточки.
-      const newCard = new Card(values, '.card__template',
-        {
-          handleCardClick: () => {
-            popupImage.open(values)
-          }
-        });
-      //2 наполнить карточку.
-      const cardElement = newCard.generateCard();
-      //3 вставить карточку в начало списка.
-      cardsList.addItem(cardElement);
+      //Отправить данные новой карточки на сервер.
+      api.addNewCard(values).then((data) => {
+        //1 создать экземпляр карточки.
+        const newCard = new Card(data, '.card__template',
+          {
+            handleCardClick: () => {
+              popupImage.open(data)
+            }
+          });
+        //2 наполнить карточку.
+        const cardElement = newCard.generateCard();
+        //3 вставить карточку в начало списка.
+        cardsList.addItem(cardElement);
+      })
       //4 автоматически закрыть popup.
       popupAdd.close();
       //5 обнулить форму.
@@ -93,12 +102,6 @@ export const popupConfirm = new PopupConfirm('.popup_type_confirm',
 
 popupConfirm.setEventListeners();
 
-//Профиль пользователя.
-const userInfo = new UserInfo({
-  nameSelector: '.profile__name',
-  aboutSelector: '.profile__about'
-});
-
 //Создать экземпляр класса Api для связи с сервером.
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-13',
@@ -108,33 +111,32 @@ const api = new Api({
   }
 });
 
+// Получить начальные данные пользователя.
 api.getUserInfo().then((userData) => {
   userInfo.setUserInfo(userData);
   avatar.src = userData.avatar;
-
 });
+
+//Создать и наполнить новую карточку, вставить в общий список.
+const cardsList = new Section({
+  renderer: (item) => {
+    //1 создать экземпляр карточки.
+    const newCard = new Card(item, '.card__template',
+      {
+        handleCardClick: () => {
+          popupImage.open(item)
+        }
+      });
+    //2 создать и наполнить карточку.
+    const cardElement = newCard.generateCard();
+    //3 вернуть карточку.
+    cardsList.addItem(cardElement);
+  }
+}, '.cards__list');
 
 //Наполнить сайт карточками с сервера.
 api.getCardsInfo().then((array) => {
-  //Создать и наполнить новую карточку, вставить в общий список.
-  const cardsList = new Section({
-    items: array,
-    renderer: (item) => {
-      //1 создать экземпляр карточки.
-      const newCard = new Card(item, '.card__template',
-        {
-          handleCardClick: () => {
-            popupImage.open(item)
-          }
-        });
-      //2 создать и наполнить карточку.
-      const cardElement = newCard.generateCard();
-      //3 вернуть карточку.
-      cardsList.addItem(cardElement);
-    }
-  }, '.cards__list');
-
-  cardsList.renderElements();
+  cardsList.renderElements(array);
 });
 
 
