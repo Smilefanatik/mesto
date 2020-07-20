@@ -64,9 +64,12 @@ popupAdd.setEventListeners();
 const popupEdit = new PopupWithForm('.popup_type_edit-profile',
   {
     submitHandler: (values) => {
-      //1 подставить новые значения полей в профиль пользователя.
-      userInfo.setUserInfo(values);
-      //2 автоматически закрыть popup.
+      //1 Отправить на сервер новые данные.
+      api.changeProfileData(values).then((data) => {
+        //2 подставить новые значения полей в профиль пользователя.
+        userInfo.setUserInfo(data);
+      })
+      //3 автоматически закрыть popup.
       popupEdit.close();
     }
   });
@@ -84,9 +87,9 @@ popupEditAvatar.setEventListeners();
 //Popup удаления карточки.
 export const popupConfirm = new PopupConfirm('.popup_type_confirm',
   {
-  submitHandler: () => {
-  }
-});
+    submitHandler: () => {
+    }
+  });
 
 popupConfirm.setEventListeners();
 
@@ -113,25 +116,25 @@ api.getUserInfo().then((userData) => {
 
 //Наполнить сайт карточками с сервера.
 api.getCardsInfo().then((array) => {
-//Создать и наполнить новую карточку, вставить в общий список.
-const cardsList = new Section({
-  items: array,
-  renderer: (item) => {
-    //1 создать экземпляр карточки.
-    const newCard = new Card(item, '.card__template',
-    {
-      handleCardClick: () => {
-        popupImage.open(item)
-      }
-    });
-    //2 создать и наполнить карточку.
-    const cardElement = newCard.generateCard();
-    //3 вернуть карточку.
-    cardsList.addItem(cardElement);
-  }
-}, '.cards__list');
+  //Создать и наполнить новую карточку, вставить в общий список.
+  const cardsList = new Section({
+    items: array,
+    renderer: (item) => {
+      //1 создать экземпляр карточки.
+      const newCard = new Card(item, '.card__template',
+        {
+          handleCardClick: () => {
+            popupImage.open(item)
+          }
+        });
+      //2 создать и наполнить карточку.
+      const cardElement = newCard.generateCard();
+      //3 вернуть карточку.
+      cardsList.addItem(cardElement);
+    }
+  }, '.cards__list');
 
-cardsList.renderElements();
+  cardsList.renderElements();
 });
 
 

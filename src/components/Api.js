@@ -35,5 +35,24 @@ export default class Api {
         console.log(`Ошибка: ${error}`);
       });
   }
-}
 
+  changeProfileData(values) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: values.name,
+        about: values.about
+      })
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    })
+    .catch((error) => {
+      console.log(`Ошибка: ${error}`);
+    });
+  }
+}
