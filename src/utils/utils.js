@@ -10,7 +10,7 @@ import photoMeadow from '../images/photo_meadow.jpg';
 export const initialCards = [
   {
     name: 'Лес',
-    link:  photoSequoia
+    link: photoSequoia
   },
   {
     name: 'Герой асфальта',
