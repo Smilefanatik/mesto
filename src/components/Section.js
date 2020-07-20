@@ -8,7 +8,6 @@ export default class Section {
   //Содержит публичный метод, который отвечает за отрисовку всех элементов.
   //Отрисовка каждого отдельного элемента должна осуществляться функцией renderer.
   renderElements() {
-    // console.log(this._renderedItems);
     // ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
     this._renderedItems.forEach((item) => {
       this._renderer(item);

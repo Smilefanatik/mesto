@@ -10,15 +10,16 @@ import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import { object, initialCards } from '../utils/utils.js';
 
-
+// this._avatarContent = document.querySelector(avatarSelector);
 const overlay = document.querySelector('.profile__overlay');
+const avatar = document.querySelector('.profile__avatar');
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 
 //Поля ввода.
 const nameInput = document.querySelector('.popup__input_element_name');
-const jobInput = document.querySelector('.popup__input_element_job');
+const aboutInput = document.querySelector('.popup__input_element_about');
 
 // Валидация полей формы.
 const formEdit = document.querySelector('.popup__container_type_edit-profile');
@@ -92,7 +93,7 @@ popupConfirm.setEventListeners();
 //Профиль пользователя.
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
-  jobSelector: '.profile__job'
+  aboutSelector: '.profile__about'
 });
 
 //Создать экземпляр класса Api для связи с сервером.
@@ -102,6 +103,12 @@ const api = new Api({
     authorization: '8a32d376-0349-4b99-b4c1-e80b592cabc8',
     'Content-Type': 'application/json'
   }
+});
+
+api.getUserInfo().then((userData) => {
+  userInfo.setUserInfo(userData);
+  avatar.src = userData.avatar;
+
 });
 
 //Наполнить сайт карточками с сервера.
@@ -135,7 +142,7 @@ editButton.addEventListener('click', () => {
   //Подтянуть данные пользователя в popup.
   const userInfoData = userInfo.getUserInfo();
   nameInput.value = userInfoData.name;
-  jobInput.value = userInfoData.job;
+  aboutInput.value = userInfoData.about;
   popupEdit.open();
 });
 

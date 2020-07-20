@@ -1,13 +1,13 @@
 export default class UserInfo {
-  constructor({ nameSelector, jobSelector }) {
+  constructor({ nameSelector, aboutSelector }) {
     this._nameContent = document.querySelector(nameSelector);
-    this._jobContent = document.querySelector(jobSelector);
+    this._aboutContent = document.querySelector(aboutSelector);
   }
 
   getUserInfo() {
   const profileData = {
     name: this._nameContent.textContent,
-    job: this._jobContent.textContent
+    about: this._aboutContent.textContent
   };
   return profileData;
   }
@@ -15,7 +15,7 @@ export default class UserInfo {
   setUserInfo(newData) {
     //принимает новые данные пользователя и добавляет их на страницу.
     this._nameContent.textContent = newData.name;
-    this._jobContent.textContent = newData.job;
+    this._aboutContent.textContent = newData.about;
   }
 
 }

@@ -1,4 +1,4 @@
-.profile__job {
+.profile__about {
   margin: 5px 0 0;
   font-style: normal;
   font-weight: normal;
@@ -8,14 +8,14 @@
 }
 
 @media screen and (max-width: 1050px) {
-  .profile__job {
+  .profile__about {
     font-size: 14px;
     line-height: 1.21;
   }
 }
 
 @media screen and (max-width: 950px) {
-  .profile__job {
+  .profile__about {
     text-align: center;
     margin-top: 0;
   }
