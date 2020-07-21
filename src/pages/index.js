@@ -117,7 +117,7 @@ api.getUserInfo().then((userData) => {
   avatar.src = userData.avatar;
 });
 
-//Создать и наполнить новую карточку, вставить в общий список.
+//Создать секцию для отображения карточек.
 const cardsList = new Section({
   renderer: (item) => {
     //1 создать экземпляр карточки.
