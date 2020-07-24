@@ -34,13 +34,19 @@ export default class PopupWithForm extends Popup {
     }
   }
 
+  //Метод назначения сабмита.
+  setSubmitHandler(handler) {
+    this._submitHandler = handler;
+  }
+
   setEventListeners() {
     this._form = this._popup.querySelector('.popup__form');
 
     super.setEventListeners();
 
     //Сабмит формы.
-    this._form.addEventListener('submit', () => {
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
       this._submitHandler(this._getInputValues());
     });
   }
