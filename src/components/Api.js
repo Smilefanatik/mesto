@@ -82,13 +82,13 @@ export default class Api {
 
   //Удалить карточку.
   deleteCard(cardId) {
-    fetch(`${this._url}/cards/${cardId}`, {
+    return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
       .then((response) => {
         if (response.ok) {
-          console.log(response.json());
+          return response.json();
         }
       })
       .catch((error) => {
