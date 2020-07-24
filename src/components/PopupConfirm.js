@@ -1,5 +1,5 @@
 import Popup from './Popup.js';
-
+//Подтверждение на удаление карточки.
 export default class PopupConfirm extends Popup {
   constructor(popupSelector) {
     super(popupSelector);

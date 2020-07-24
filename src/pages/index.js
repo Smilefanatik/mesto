@@ -8,9 +8,9 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupConfirm from '../components/PopupConfirm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
-import { object, initialCards } from '../utils/utils.js';
+import { object } from '../utils/utils.js';
 
-// this._avatarContent = document.querySelector(avatarSelector);
+
 const overlay = document.querySelector('.profile__overlay');
 const avatar = document.querySelector('.profile__avatar');
 //Иконки и кнопки.
@@ -54,15 +54,18 @@ popupEdit.setEventListeners();
 
 //Popup редактирования аватара.
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
-  submitHandler: (e) => {
-    console.log(e);
-  }
+  submitHandler: (values) => {
+    api.changeAvatar(values).then((response) => {
+      avatar.src = response.avatar;
+    })
+    popupEditAvatar.close();
+}
 });
 popupEditAvatar.setEventListeners();
 
 
 //Popup удаления карточки.
-export const popupConfirm = new PopupConfirm('.popup_type_confirm');
+const popupConfirm = new PopupConfirm('.popup_type_confirm');
 popupConfirm.setEventListeners();
 
 //Создать экземпляр класса Api для связи с сервером.
@@ -79,6 +82,7 @@ const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   aboutSelector: '.profile__about'
 });
+
 
 //Получить информацию о пользователе и массив карточек, вывести карточки на сайт.
 Promise.all([api.getUserInfo(), api.getCardsInfo()])
@@ -99,80 +103,82 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
       return isIdEqual;
     }
 
+    //Проверка на наличие собственных лайков на карточке.
+    function isCardLiked(item) {
+      const likesArray = item.likes;
+
+      const isLiked = likesArray.some(function (elem) {
+        return elem._id === userId;
+      })
+      return isLiked;
+    }
+
+    //Колбэк для создания новой карточки и добавления в список.
+    function createNewCard(item, isLiked) {
+      //1 создать экземпляр карточки.
+      const newCard = new Card(item, '.card__template', isLiked,
+        {//Колбэк по клику на картинку.
+          handleCardClick: () => {
+            popupImage.open(item)
+          }
+        },
+        {//Колбэк по клику на корзину.
+          handleBinClick: () => {
+            popupConfirm.open();
+            popupConfirm.setSubmitHandler(function () {
+              api.deleteCard(item._id);
+              newCard.deleteCard()
+            })
+          }
+        },
+        {//Добавить лайк.
+          addLike: () => {
+            return api.addLike(item._id);
+          }
+        },
+        {//Удалить лайк.
+          deleteLike: () => {
+            return api.deleteLike(item._id);
+          }
+        });
+      //2 наполнить карточку.
+      const cardElement = newCard.generateCard(isIdEqual(item));
+      //3 вставить карточку в начало списка.
+      cardsList.addItem(cardElement);
+    }
+
     //Создать секцию для вывода карточек с сервера.
     const cardsList = new Section({
       renderer: (item) => {
-        //1 Создать экземпляр карточки.
-        const newCard = new Card(item, '.card__template',
-          //Колбэк по клику на картинку.
-          {
-            handleCardClick: () => {
-              popupImage.open(item)
-            }
-          },
-          //Колбэк по клику на корзину.
-          {
-            handleBinClick: () => {
-              popupConfirm.open();
-              popupConfirm.setSubmitHandler(function() {
-                    api.deleteCard(item._id)
-                    newCard.deleteCard()
-                  })
+        createNewCard(item, isCardLiked(item));
       }
-    });
-    //2 Создать и наполнить карточку.
-    const cardElement = newCard.generateCard(isIdEqual(item));
-    //3 Вернуть карточку.
-    cardsList.addItem(cardElement);
-  }
     }, '.cards__list');
 
-//Вывести карточки на сайт.
-cardsList.renderElements(initialCardsInfo);
+    //Вывести карточки на сайт.
+    cardsList.renderElements(initialCardsInfo);
 
-// PopUp с формой добавления новой карточки.
-const popupAdd = new PopupWithForm('.popup_type_add-form',
-  {
-    submitHandler: (values) => {
-      //Отправить данные новой карточки на сервер.
-      api.addNewCard(values).then((item) => {
-        //1 создать экземпляр карточки.
-        const newCard = new Card(item, '.card__template',
-          //Колбэк по клику на картинку.
-          {
-            handleCardClick: () => {
-              popupImage.open(item)
-            }
-          },
-          //Колбэк по клику на корзину.
-          {
-            handleBinClick: () => {
-              popupConfirm.open();
-              popupConfirm.setSubmitHandler(function() {
-                api.deleteCard(item._id)
-                newCard.deleteCard()
-              })
-            }
-          });
-        //2 наполнить карточку.
-        const cardElement = newCard.generateCard(isIdEqual(item));
-        //3 вставить карточку в начало списка.
-        cardsList.addItem(cardElement);
-      })
-      //4 автоматически закрыть popup.
-      popupAdd.close();
-      //5 обнулить форму.
+    // PopUp с формой добавления новой карточки.
+    const popupAdd = new PopupWithForm('.popup_type_add-form',
+      {
+        submitHandler: (values) => {
+          //Отправить данные новой карточки на сервер.
+          api.addNewCard(values).then((item) => {
+            createNewCard(item);
+          })
+          //4 автоматически закрыть popup.
+          popupAdd.close();
+          //5 обнулить форму.
+          validatedFormAdd.clearForm();
+        }
+      }
+    );
+    popupAdd.setEventListeners();
+
+    //Cлушатель на кнопку добавления новой карточки.
+    addButton.addEventListener('click', () => {
       validatedFormAdd.clearForm();
-    }
-  }
-);
-popupAdd.setEventListeners();
-
-//Cлушатель на кнопку добавления новой карточки.
-addButton.addEventListener('click', () => {
-  validatedFormAdd.clearForm();
-  popupAdd.open();
-});
+      popupAdd.open();
+    });
   });
 
 

@@ -4,6 +4,7 @@ export default class Api {
     this._headers = headers;
   }
 
+  //Получить начальную информацию о пользователе.
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
@@ -20,6 +21,7 @@ export default class Api {
       });
   }
 
+  //Получить начальный массив с карточками.
   getCardsInfo() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
@@ -36,6 +38,7 @@ export default class Api {
       });
   }
 
+  //Изменить информацию о пользователе.
   changeProfileData(values) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
@@ -56,6 +59,7 @@ export default class Api {
       });
   }
 
+  //Добавить новую карточку.
   addNewCard(values) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
@@ -76,6 +80,7 @@ export default class Api {
       });
   }
 
+  //Удалить карточку.
   deleteCard(cardId) {
     fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
@@ -85,10 +90,63 @@ export default class Api {
         if (response.ok) {
           console.log(response.json());
         }
+      })
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+      });
+  }
+
+  //Поставить лайк.
+  addLike(cardId) {
+    return fetch(`${this._url}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
       });
   }
+
+  //Удалить лайк.
+  deleteLike(cardId) {
+    return fetch(`${this._url}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject(`Ошибка: ${response.status}`);
+      })
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+      });
+  }
+
+  changeAvatar(values) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(values)
+    })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      return Promise.reject(`Ошибка: ${response.status}`);
+    })
+    .catch((error) => {
+      console.log(`Ошибка: ${error}`);
+    })
+  }
+
 }
+
+
