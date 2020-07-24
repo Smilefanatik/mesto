@@ -40,29 +40,45 @@ popupImage.setEventListeners();
 const popupEdit = new PopupWithForm('.popup_type_edit-profile',
   {
     submitHandler: (values) => {
+      popupEdit.renderLoading(true);
       //1 Отправить на сервер новые данные.
-      api.changeProfileData(values).then((data) => {
-        //2 подставить новые значения полей в профиль пользователя.
-        userInfo.setUserInfo(data);
-      })
-      //3 автоматически закрыть popup.
-      popupEdit.close();
+      api.changeProfileData(values)
+        .then((data) => {
+          //2 подставить новые значения полей в профиль пользователя.
+          userInfo.setUserInfo(data);
+        })
+        .then(() => {
+          //3 автоматически закрыть popup.
+          popupEdit.close();
+        })
+        .catch((error) => {
+          console.log(`Ошибка: ${error}`);
+        })
+        .finally(popupEdit.renderLoading(false, 'Сохранить'));
     }
   });
-
 popupEdit.setEventListeners();
 
 //Popup редактирования аватара.
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
   submitHandler: (values) => {
-    api.changeAvatar(values).then((response) => {
-      avatar.src = response.avatar;
-    })
-    popupEditAvatar.close();
-}
+    popupEditAvatar.renderLoading(true);
+    api.changeAvatar(values)
+      .then((response) => {
+        //1 Изменить аватар.
+        avatar.src = response.avatar;
+      })
+      .then(() => {
+        //2 Закрыть попап.
+        popupEditAvatar.close();
+      })
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+      })
+      .finally(popupEditAvatar.renderLoading(false, 'Сохранить'));
+  }
 });
 popupEditAvatar.setEventListeners();
-
 
 //Popup удаления карточки.
 const popupConfirm = new PopupConfirm('.popup_type_confirm');
@@ -82,7 +98,6 @@ const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   aboutSelector: '.profile__about'
 });
-
 
 //Получить информацию о пользователе и массив карточек, вывести карточки на сайт.
 Promise.all([api.getUserInfo(), api.getCardsInfo()])
@@ -126,8 +141,10 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
           handleBinClick: () => {
             popupConfirm.open();
             popupConfirm.setSubmitHandler(function () {
-              api.deleteCard(item._id);
-              newCard.deleteCard()
+              api.deleteCard(item._id)
+                .then(() => {
+                  newCard.deleteCard()
+                })
             })
           }
         },
@@ -161,13 +178,22 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
     const popupAdd = new PopupWithForm('.popup_type_add-form',
       {
         submitHandler: (values) => {
-          //Отправить данные новой карточки на сервер.
-          api.addNewCard(values).then((item) => {
-            createNewCard(item);
-          })
-          //4 автоматически закрыть popup.
-          popupAdd.close();
-          //5 обнулить форму.
+          popupAdd.renderLoading(true);
+          //1 Отправить данные новой карточки на сервер.
+          api.addNewCard(values)
+            .then((item) => {
+              //2 Создать карточку.
+              createNewCard(item);
+            })
+            .then(() => {
+              //3 автоматически закрыть popup.
+              popupAdd.close();
+            })
+            .catch((error) => {
+              console.log(`Ошибка: ${error}`);
+            })
+            .finally(popupAdd.renderLoading(false, 'Создать'));
+          //4 обнулить форму.
           validatedFormAdd.clearForm();
         }
       }
@@ -179,8 +205,10 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
       validatedFormAdd.clearForm();
       popupAdd.open();
     });
+  })
+  .catch((error) => {
+    console.log(`Ошибка: ${error}`);
   });
-
 
 // СЛУШАТЕЛИ
 // Cлушатель на кнопку редактирования.
@@ -199,6 +227,4 @@ editButton.addEventListener('click', () => {
 overlay.addEventListener('click', () => {
   validatedFormAvatar.clearForm();
   popupEditAvatar.open();
-
-}
-)
+});

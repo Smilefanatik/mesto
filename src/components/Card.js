@@ -57,17 +57,29 @@ export default class Card {
   //Обработать нажатие на лайк.
   _handleLikeClick() {
     if (this._isLiked) {
-      this._deleteLike().then((response) => {
-        this._counter.textContent = response.likes.length;
-        this._isLiked = !this._isLiked;
-        this._like.classList.toggle('card__like_active');
-      })
+      this._deleteLike()
+        .then((response) => {
+          this._counter.textContent = response.likes.length;
+          this._isLiked = !this._isLiked;
+        })
+        .then(() => {
+          this._like.classList.toggle('card__like_active');
+        })
+        .catch((error) => {
+          console.log(`Ошибка: ${error}`);
+        });
     } else {
-      this._addLike().then((response) => {
-        this._counter.textContent = response.likes.length;
-        this._isLiked = !this._isLiked;
-        this._like.classList.toggle('card__like_active');
-      });
+      this._addLike()
+        .then((response) => {
+          this._counter.textContent = response.likes.length;
+          this._isLiked = !this._isLiked;
+        })
+        .then(() => {
+          this._like.classList.toggle('card__like_active');
+        })
+        .catch((error) => {
+          console.log(`Ошибка: ${error}`);
+        });
     }
   }
 
@@ -75,6 +87,7 @@ export default class Card {
   deleteCard() {
     this._element.remove();
     this._element = null;
+    this._bin.removeEventListener('click', () => this._handleBinClick());
   }
 
   //МЕТОД ДОБАВЛЕНИЯ СЛУШАТЕЛЕЙ НА ЭЛЕМЕНТЫ КАРТОЧКИ

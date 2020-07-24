@@ -24,6 +24,16 @@ export default class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  //Метод отображения лоадера.
+  renderLoading(isLoading, buttonWord) {
+    this._submitButton = this._popup.querySelector('.popup__save-button');
+    if (isLoading) {
+      this._submitButton.textContent = 'Сохранение...';
+    } else {
+      this._submitButton.textContent = buttonWord;
+    }
+  }
+
   setEventListeners() {
     this._form = this._popup.querySelector('.popup__form');
 
