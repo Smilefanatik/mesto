@@ -46,14 +46,14 @@ const popupEdit = new PopupWithForm('.popup_type_edit-profile',
           //2 подставить новые значения полей в профиль пользователя.
           userInfo.setUserInfo(data);
         })
-        .then(() => {
-          //3 автоматически закрыть popup.
-          popupEdit.close();
-        })
         .catch((error) => {
           console.log(`Ошибка: ${error}`);
         })
-        .finally(popupEdit.renderLoading(false, 'Сохранить'));
+        .finally(() => {
+          //3 автоматически закрыть popup.
+          popupEdit.close();
+          popupEdit.renderLoading(false, 'Сохранить');
+        })
     }
   });
 
@@ -69,14 +69,14 @@ const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
         //1 Изменить аватар.
         userInfo.setAvatar(response);
       })
-      .then(() => {
-        //2 Закрыть попап.
-        popupEditAvatar.close();
-      })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
       })
-      .finally(popupEditAvatar.renderLoading(false, 'Сохранить'));
+      .finally(() => {
+        //2 Закрыть попап.
+        popupEditAvatar.close();
+        popupEditAvatar.renderLoading(false, 'Сохранить');
+      })
   }
 });
 popupEditAvatar.setEventListeners();
@@ -149,11 +149,15 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
             popupConfirm.setSubmitHandler(function () {
               api.deleteCard(item._id)
                 .then(() => {
+                  //1 Удалить карточку.
                   newCard.deleteCard();
-                  popupConfirm.close();
                 })
                 .catch((error) => {
                   console.log(`Ошибка: ${error}`);
+                })
+                .finally(() => {
+                  //2 Закрыть попап.
+                  popupConfirm.close();
                 })
             })
           }
@@ -207,14 +211,14 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
               //2 Создать карточку.
               createNewCard(item);
             })
-            .then(() => {
-              //3 автоматически закрыть popup.
-              popupAdd.close();
-            })
             .catch((error) => {
               console.log(`Ошибка: ${error}`);
             })
-            .finally(popupAdd.renderLoading(false, 'Создать'));
+            .finally(() => {
+              //3 автоматически закрыть popup.
+              popupAdd.close();
+              popupAdd.renderLoading(false, 'Создать');
+            })
           //4 обнулить форму.
           validatedFormAdd.clearForm();
         }
