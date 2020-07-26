@@ -16,9 +16,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   //Получить начальный массив с карточками.
@@ -33,9 +30,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
   }
 
   //Изменить информацию о пользователе.
@@ -54,9 +48,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
   }
 
   //Добавить новую карточку.
@@ -75,9 +66,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
   }
 
   //Удалить карточку.
@@ -91,9 +79,6 @@ export default class Api {
           return response.json();
         }
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
   }
 
   //Поставить лайк.
@@ -108,9 +93,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
   }
 
   //Удалить лайк.
@@ -125,9 +107,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${response.status}`);
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
   }
 
   changeAvatar(values) {
@@ -141,9 +120,6 @@ export default class Api {
         return response.json();
       }
       return Promise.reject(`Ошибка: ${response.status}`);
-    })
-    .catch((error) => {
-      console.log(`Ошибка: ${error}`);
     })
   }
 
