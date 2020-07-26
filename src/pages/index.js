@@ -67,7 +67,7 @@ const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', {
     api.changeAvatar(values)
       .then((response) => {
         //1 Изменить аватар.
-        avatar.src = response.avatar;
+        userInfo.setAvatar(response);
       })
       .then(() => {
         //2 Закрыть попап.
@@ -100,7 +100,8 @@ const api = new Api({
 //Профиль пользователя.
 const userInfo = new UserInfo({
   nameSelector: '.profile__name',
-  aboutSelector: '.profile__about'
+  aboutSelector: '.profile__about',
+  avatarSelector: '.profile__avatar'
 });
 
 
@@ -114,7 +115,7 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
 
     //Вывести начальные данные пользователя.
     userInfo.setUserInfo(userData);
-    avatar.src = userData.avatar;
+    userInfo.setAvatar(userData);
     const userId = userData._id;
 
     //Проверка на совпадение id пользователя и владельца карточки.
