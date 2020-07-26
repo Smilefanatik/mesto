@@ -1,7 +1,6 @@
 export default class Card {
   constructor(data, cardSelector, isLiked,
-    { handleCardClick }, { handleBinClick },
-    { addLike }, { deleteLike }) {
+    { handleCardClick }, { handleBinClick }, { handleLikeClick }) {
     this._title = data.name;
     this._link = data.link;
     this._likes = data.likes.length;
@@ -9,8 +8,7 @@ export default class Card {
     this._isLiked = isLiked;
     this._handleCardClick = handleCardClick;
     this._handleBinClick = handleBinClick;
-    this._addLike = addLike;
-    this._deleteLike = deleteLike
+    this._handleLikeClick = handleLikeClick
   }
 
   //Получить шаблон.
@@ -54,33 +52,10 @@ export default class Card {
     return this._element;
   }
 
-  //Обработать нажатие на лайк.
-  _handleLikeClick() {
-    if (this._isLiked) {
-      this._deleteLike()
-        .then((response) => {
-          this._counter.textContent = response.likes.length;
-          this._isLiked = !this._isLiked;
-        })
-        .then(() => {
-          this._like.classList.toggle('card__like_active');
-        })
-        .catch((error) => {
-          console.log(`Ошибка: ${error}`);
-        });
-    } else {
-      this._addLike()
-        .then((response) => {
-          this._counter.textContent = response.likes.length;
-          this._isLiked = !this._isLiked;
-        })
-        .then(() => {
-          this._like.classList.toggle('card__like_active');
-        })
-        .catch((error) => {
-          console.log(`Ошибка: ${error}`);
-        });
-    }
+  toggleLike(likes) {
+    this._counter.textContent = likes.length;
+    this._isLiked = !this._isLiked;
+    this._like.classList.toggle('card__like_active');
   }
 
   //Удалить карточку.
@@ -95,7 +70,7 @@ export default class Card {
     //1 добавить слушателя на корзину.
     this._bin.addEventListener('click', () => this._handleBinClick());
     //2 добавить слушателя на сердечко.
-    this._like.addEventListener('click', () => { this._handleLikeClick() });
+    this._like.addEventListener('click', () => this._handleLikeClick(this._isLiked));
     //3 добавить слушателя на картинку с вызовом функции.
     this._image.addEventListener('click', () => this._handleCardClick());
   }
