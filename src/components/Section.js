@@ -11,11 +11,11 @@ export default class Section {
     // ФУНКЦИЯ ДОБАВЛЕНИЯ КАРТОЧЕК ИЗ МАССИВА
     this._initialCards.forEach((item) => {
       this._renderer(item);
-    });
+    })
   }
 
   //Содержит публичный метод addItem, который принимает DOM-элемент и добавляет его в контейнер.
   addItem(item) {
     this._containerSelector.append(item);
-  };
+  }
 }

@@ -52,6 +52,7 @@ export default class Card {
     return this._element;
   }
 
+  //Изменить состояние лайка и счётчика.
   toggleLike(likes) {
     this._counter.textContent = likes.length;
     this._isLiked = !this._isLiked;

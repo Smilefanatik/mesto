@@ -1,5 +1,3 @@
-
-
 export class FormValidator {
   constructor(object, form) {
     this._object = object;
@@ -35,7 +33,7 @@ export class FormValidator {
   _hasInvalidInput(inputList) {
     return inputList.some((input) => {
       return !input.validity.valid;
-    });
+    })
   }
 
   //ИЗМЕНЕНИЕ СОСТОЯНИЯ КНОПКИ
@@ -61,7 +59,7 @@ export class FormValidator {
         this._ValidityState(input);
         this._toggleButtonState(inputList, button);
       });
-    });
+    })
   }
 
   //ОЧИСТКА ВАЛИДАЦИИ
@@ -69,7 +67,7 @@ export class FormValidator {
     const inputList = Array.from(this._form.querySelectorAll(this._object.inputSelector));
     inputList.forEach((input) => {
       this._delInputError(input);
-      });
+    });
     const button = this._form.querySelector(this._object.submitButtonSelector);
     this._toggleButtonState(inputList, button);
   }
@@ -81,5 +79,5 @@ export class FormValidator {
     });
 
     this._setEventListeners();
-    };
+  }
 }

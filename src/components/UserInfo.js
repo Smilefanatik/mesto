@@ -6,11 +6,11 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-  const profileData = {
-    name: this._nameContent.textContent,
-    about: this._aboutContent.textContent
-  };
-  return profileData;
+    const profileData = {
+      name: this._nameContent.textContent,
+      about: this._aboutContent.textContent
+    };
+    return profileData;
   }
 
   setAvatar(newData) {
@@ -22,5 +22,4 @@ export default class UserInfo {
     this._nameContent.textContent = newData.name;
     this._aboutContent.textContent = newData.about;
   }
-
 }

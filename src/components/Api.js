@@ -13,7 +13,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
         return Promise.reject(`Ошибка: ${response.status}`);
       })
   }
@@ -27,7 +27,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
         return Promise.reject(`Ошибка: ${response.status}`);
       })
   }
@@ -45,7 +45,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
         return Promise.reject(`Ошибка: ${response.status}`);
       })
   }
@@ -63,7 +63,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
         return Promise.reject(`Ошибка: ${response.status}`);
       })
   }
@@ -77,7 +77,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
       })
   }
 
@@ -90,7 +90,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
         return Promise.reject(`Ошибка: ${response.status}`);
       })
   }
@@ -104,7 +104,7 @@ export default class Api {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        }
+        };
         return Promise.reject(`Ошибка: ${response.status}`);
       })
   }
@@ -115,14 +115,13 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(values)
     })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(`Ошибка: ${response.status}`);
-    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        };
+        return Promise.reject(`Ошибка: ${response.status}`);
+      })
   }
-
 }
 
 

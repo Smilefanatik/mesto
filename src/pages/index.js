@@ -11,7 +11,6 @@ import { object } from '../utils/utils.js';
 
 
 const overlay = document.querySelector('.profile__overlay');
-const avatar = document.querySelector('.profile__avatar');
 //Иконки и кнопки.
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -171,7 +170,7 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
                 })
                 .catch((error) => {
                   console.log(`Ошибка: ${error}`);
-                });
+                })
             } else {
               api.addLike(item._id)
                 .then((response) => {
@@ -230,7 +229,7 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
     addButton.addEventListener('click', () => {
       validatedFormAdd.clearForm();
       popupAdd.open();
-    });
+    })
   })
   .catch((error) => {
     console.log(`Ошибка: ${error}`);
@@ -254,5 +253,4 @@ editButton.addEventListener('click', () => {
 overlay.addEventListener('click', () => {
   validatedFormAvatar.clearForm();
   popupEditAvatar.open();
-
 })

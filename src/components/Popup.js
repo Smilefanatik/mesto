@@ -5,13 +5,13 @@ export default class Popup {
     this._handleEscClose = (evt) => {
       if (evt.key === 'Escape') {
         this.close();
-      };
+      }
     }
     //Функция закрытия Popup по оверлей.
     this._handleOverlayClose = (evt) => {
       if (evt.target === this._popup) {
         this.close();
-      };
+      }
     }
   }
   //Метод открытия Popup
