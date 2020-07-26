@@ -178,31 +178,6 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
             }
           }
         }
-        // {//Добавить лайк.
-        //   addLike: () => {
-        //     return api.addLike(item._id)
-        //       .then((response) => {
-        //         this._counter.textContent = response.likes.length;
-        //         this._isLiked = !this._isLiked;
-        //       })
-        //       .then(() => {
-        //         this._like.classList.toggle('card__like_active');
-        //       })
-        // .catch((error) => {
-        //   console.log(`Ошибка: ${error}`);
-        // });
-        //   }
-        // },
-        // {//Удалить лайк.
-        //   deleteLike: () => {
-        //     return api.deleteLike(item._id)
-        //       .then((response) => {
-        //         return response.likes;
-        //       })
-        //       .catch((error) => {
-        //         console.log(`Ошибка: ${error}`);
-        //       });
-        //   }
       );
       //2 наполнить карточку.
       const cardElement = newCard.generateCard(isIdEqual(item));
@@ -211,14 +186,14 @@ Promise.all([api.getUserInfo(), api.getCardsInfo()])
     }
 
     //Создать секцию для вывода карточек с сервера.
-    const cardsList = new Section({
+    const cardsList = new Section(initialCardsInfo, {
       renderer: (item) => {
         createNewCard(item, isCardLiked(item));
       }
     }, '.cards__list');
 
     //Вывести карточки на сайт.
-    cardsList.renderElements(initialCardsInfo);
+    cardsList.renderElements();
 
     // PopUp с формой добавления новой карточки.
     const popupAdd = new PopupWithForm('.popup_type_add-form',
